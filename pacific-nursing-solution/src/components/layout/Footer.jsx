@@ -35,7 +35,7 @@ const Footer = () => {
 
   return (
     <footer
-      className="lg:py-20 px-5 md:px-20"
+      className="pt-96 -mt-96 lg:pb-5 px-5 md:px-20"
       style={{
         background:
           "linear-gradient(to bottom, rgba(8, 113, 167, 0) 0%, rgba(6, 85, 126, 0.35) 40%, rgba(6, 77, 114, 0.52) 52%, rgba(5, 68, 100, 0.65) 65%, rgba(4, 57, 85, 0.8) 80%, rgba(4, 48, 71, 0.94) 94%, rgba(3, 44, 65, 1) 100%)",
@@ -44,7 +44,7 @@ const Footer = () => {
       <div className="flex flex-wrap justify-between text-white md:text-[#BFE7FF]">
         {/* First Column: Reach Us */}
         <div className="w-full md:w-1/3 mb-8">
-          <h4 className="text-white md:text-[#276C8F] lg:text-[24px] md:text-[24px] sm:text-[20px] text-[16px] font-extrabold mb-6">
+          <h4 className="text-white lg:text-[24px] md:text-[24px] sm:text-[20px] text-[16px] font-extrabold mb-6">
             Reach Us
           </h4>
           <ul>
@@ -84,7 +84,7 @@ const Footer = () => {
 
         {/* Second Column: Company */}
         <div className="w-full md:w-1/3 mb-8">
-          <h4 className="text-white md:text-[#276C8F] lg:text-[24px] md:text-[24px] sm:text-[20px] text-[16px] font-extrabold mb-6">
+          <h4 className="text-white lg:text-[24px] md:text-[24px] sm:text-[20px] text-[16px] font-extrabold mb-6">
             Company
           </h4>
           <div className="grid grid-cols-3 gap-4">
