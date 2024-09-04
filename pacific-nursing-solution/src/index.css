@@ -55,3 +55,98 @@ body {
 body:hover {
   scrollbar-color: #0E3D68 #f1f1f1; /* thumb color track color when hovered */
 }
+
+.placeholder {
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 400px; /* Adjust height to match your images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #888;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Adjust as needed */
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Or 'contain' based on your needs */
+}
+
+/*Image loading */
+/* Tetris Loader CSS */
+.tetris-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0; /* Background color to match placeholder */
+}
+
+.tetris-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px; /* Width of the loader container */
+  height: 150px; /* Height of the loader container */
+  position: relative;
+}
+
+.block {
+  width: 30px;
+  height: 30px;
+  margin: 2px;
+  position: absolute;
+  animation: fall 1.5s infinite ease-in-out;
+}
+
+.block1 { background-color: #6CBF2A; top: 0; left: 0; animation-delay: 0.1s; }
+.block2 { background-color: #093761; top: 0; left: 34px; animation-delay: 0.2s; }
+.block3 { background-color: #0E3D68; top: 0; left: 68px; animation-delay: 0.3s; }
+.block4 { background-color: #C6E8FF; top: 0; left: 102px; animation-delay: 0.4s; }
+.block5 { background-color: #6CBF2A; top: 34px; left: 17px; animation-delay: 0.5s; }
+.block6 { background-color: #093761; top: 34px; left: 51px; animation-delay: 0.6s; }
+.block7 { background-color: #0E3D68; top: 34px; left: 85px; animation-delay: 0.7s; }
+.block8 { background-color: #C6E8FF; top: 68px; left: 34px; animation-delay: 0.8s; }
+
+@keyframes fall {
+  0% { transform: translateY(-100px); opacity: 0; }
+  50% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100px); opacity: 0; }
+}
+
+/* Placeholder styles with loader */
+.placeholder {
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 400px; /* Adjust height to match your images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Ensures loader is positioned within the placeholder */
+  overflow: hidden; /* Prevents blocks from overflowing */
+}
+
+.placeholder .tetris-loader {
+  position: absolute; /* Position the loader within the placeholder */
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Adjust as needed */
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Or 'contain' based on your needs */
+}

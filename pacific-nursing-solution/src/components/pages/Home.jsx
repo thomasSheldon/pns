@@ -1,16 +1,16 @@
 import React, { useState, Suspense, lazy } from "react";
 import Navigation from "../layout/Navigation";
 import {
-  // homeHero,
-  // homeOurService,
+  homeHero,
+  homeOurService,
   joinHero,
   ourPhilo,
   costWagesPlacements,
   faqsHome,
 } from "../../assets/homePageButton";
 
-const HomeHero = lazy(() => import('../../assets/homePageButton/homeHero.svg').then(module => ({ default: module.ReactComponent })));
-const HomeOurService = lazy(() => import('../../assets/homePageButton/homeOurService.svg').then(module => ({ default: module.ReactComponent })));
+// const HomeHero = lazy(() => import('../../assets/homePageButton/homeHero.svg').then(module => ({ default: module.ReactComponent })));
+// const HomeOurService = lazy(() => import('../../assets/homePageButton/homeOurService.svg').then(module => ({ default: module.ReactComponent })));
 
 
 import { homeOurServiceContent } from "../../constants";
@@ -21,6 +21,14 @@ import Footer from "../layout/Footer";
 
 const Home = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState({
+    homeHero: false,
+    homeOurService: false,
+    joinHero: false,
+    ourPhilo: false,
+    costWagesPlacements: false,
+    faqsHome: false,
+  });
 
   const faqsData = [
     {
@@ -82,6 +90,7 @@ const Home = () => {
     },
   ];
 
+
   // State to track which FAQ is expanded
   const [expandedIndex, setExpandedIndex] = useState(null);
 
@@ -93,14 +102,65 @@ const Home = () => {
   return (
     <section className="bg-[#D6EFFF]">
       <Navigation />
-      {/* <img src={homeHero} alt="" className="w-full" />
-      <img src={homeOurService} alt="" className="w-full" /> */}
-      <Suspense fallback={<div>Loading...</div>}>
+      <div className="relative">
+        {!imageLoaded.homeHero && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <img
+          src={homeHero}
+          alt=""
+          className={`w-full ${imageLoaded.homeHero ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, homeHero: true }))}
+        />
+      </div>
+
+      <div className="relative">
+        {!imageLoaded.homeOurService && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <img
+          src={homeOurService}
+          alt=""
+          className={`w-full ${imageLoaded.homeOurService ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, homeOurService: true }))}
+        />
+      </div>
+
+
+     {/* <div>
+     <Suspense fallback={<div>Loading...</div>}>
         <HomeHero className="w-full" alt="" />
       </Suspense>
       <Suspense fallback={<div>Loading...</div>}>
         <HomeOurService className="w-full" alt="" />
       </Suspense>
+     </div> */}
 
       <h2 className="text-center text-[#6CBF2A] font-extrabold pt-10 text-[22px] sm:text-[30px] md:text-[40px] lg:text-[70px]">
         LEARN HOW WE PREPARE YOU FOR YOUR PACIFIC NURSING SOLUTIONS JOURNEY
@@ -142,21 +202,108 @@ const Home = () => {
       </div>
 
       <div>
-        <img src={joinHero} alt="" className="w-full" />
-        <img src={ourPhilo} alt="" className="w-full p-20 z-10" />
+      <div className="relative">
+        {!imageLoaded.joinHero && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <img
+          src={joinHero}
+          alt=""
+          className={`w-full ${imageLoaded.joinHero ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, joinHero: true }))}
+        />
+      </div>
+
+      <div className="relative lg:p-20 md:p-16 sm:p-12 p-10">
+        {!imageLoaded.ourPhilo && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <img
+          src={ourPhilo}
+          alt=""
+          className={`w-full ${imageLoaded.ourPhilo ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, ourPhilo: true }))}
+        />
+      </div>
+
+      <div className="relative z-0 -mt-[180px] sm:-mt-[295px] md:-mt-[395px] lg:-mt-[535px] xlg:-mt-[540px]">
+        {!imageLoaded.costWagesPlacements && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
         <img
           src={costWagesPlacements}
           alt=""
-          className="w-full relative z-0 -mt-[225px] sm:-mt-[340px] md:-mt-[415px] lg:-mt-[625px]"
+          className={`w-full ${imageLoaded.costWagesPlacements ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, costWagesPlacements: true }))}
         />
       </div>
-      <img
-        src={faqsHome}
-        alt=""
-        className="w-full lg:-mt-[8.5px] md:-mt-[5px]  sm:-mt-[4px] -mt-[2px]"
-      />
 
-      <div className="flex flex-col items-center px-4 py-8">
+      </div>
+      <div className="relative lg:-mt-2 sm:-mt-[7px] -mt-1">
+        {!imageLoaded.faqsHome && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <img
+          src={faqsHome}
+          alt=""
+          className={`w-full ${imageLoaded.faqsHome ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, faqsHome: true }))}
+        />
+      </div>
+
+      <div className="flex flex-col items-center px-4 py-6">
         {faqsData.map((faq, index) => (
           <div key={index} className="w-full max-w-4xl mb-4">
             {/* Question row */}
