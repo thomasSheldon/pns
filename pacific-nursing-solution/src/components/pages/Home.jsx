@@ -171,18 +171,18 @@ const Home = () => {
         for the employment-based visa.
       </p>
 
-      <div className="flex flex-wrap justify-center mx-[100px]">
+      <div className="flex flex-wrap justify-center sm:mx-[100px] p-10 sm:p-0">
         {homeOurServiceContent.map((item, index) => (
           <div
             key={item.id}
-            className={`relative p-4 flex flex-col items-center justify-center w-full sm:w-1/3 transition-all duration-300 delay-150 ease-in-out`}
+            className={`relative md:p-4 p-1 mb-8 flex flex-col items-center justify-center w-full sm:w-1/3 transition-all duration-300 delay-150 ease-in-out`}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
             <img
               src={hoveredIndex === index ? item.imgSrcHover : item.imgSrc}
               alt={`Service ${index + 1}`}
-              className={`w-full h-auto object-cover rounded-[5rem] mb-5 transition-transform duration-500 ${
+              className={`w-full h-auto object-cover lg:rounded-[5rem] lg:mb-5 md:mb-3 -mb-2 transition-transform duration-500 ${
                 hoveredIndex === index
                   ? "transform scale-105"
                   : "transform scale-100"
@@ -192,8 +192,8 @@ const Home = () => {
             <Button
               color="#0E3D68"
               textColor="#78C440"
-              width="230px"
-              className="mt-4"
+              // width="lg:230px"
+              className="sm:mt-4 mt-5 lg:w-[230px] sm:w-[180px] md:w-[200px] w-[100px] text-[10px] sm:text-[14px] md:text-[18px]"
             >
               LEARN MORE
             </Button>
@@ -202,7 +202,7 @@ const Home = () => {
       </div>
 
       <div>
-      <div className="relative">
+      <div className="relative lg:mt-28">
         {!imageLoaded.joinHero && (
           <div className="placeholder">
             <div className="tetris-loader">
@@ -308,7 +308,7 @@ const Home = () => {
           <div key={index} className="w-full max-w-4xl mb-4">
             {/* Question row */}
             <div
-              className={`flex justify-between items-center bg-radial-gradient px-4 py-5 cursor-pointer rounded-md`}
+              className={`flex justify-between items-center bg-radial-gradient px-4 py-5 cursor-pointer rounded-lg`}
               onClick={() => toggleAnswer(index)}
             >
               <span className="text-white font-medium px-1 py-5">
