@@ -19,20 +19,58 @@ const Navigation = () => {
           <button className="hamburger" onClick={toggleMenu}>
             <img className="h-8 w-8" src={burgerMenu} alt="Menu" />
           </button>
-          {menuOpen && (
-            <div className="fixed inset-0 bg-primaryBackground z-50 flex flex-col items-center justify-center space-y-8">
-              {/* Close Button */}
-              <button className="absolute top-4 right-4 text-2xl text-blue-900" onClick={toggleMenu}>
-                &times;
-              </button>
-              <Link to="/" className="text-blue-900 text-lg" onClick={toggleMenu}>Home</Link>
-              <Link to="/aboutUs" className="text-blue-900 text-lg" onClick={toggleMenu}>About Us</Link>
-              <Link to="/ourServices" className="text-blue-900 text-lg" onClick={toggleMenu}>Our Services</Link>
-              <Link to="/contactUs" className="text-blue-900 text-lg" onClick={toggleMenu}>Contact Us</Link>
-              <Link to="/faqs" className="text-blue-900 text-lg" onClick={toggleMenu}>FAQs</Link>
-              <Link to="/applicationForm" className="text-blue-900 text-lg" onClick={toggleMenu}>Apply Now</Link>
-            </div>
-          )}
+          <div
+            className={`fixed inset-0 z-50 flex flex-col items-center justify-center space-y-8 bg-primaryBackground transform transition-transform duration-500 ease-in-out ${
+              menuOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+          >
+            {/* Close Button */}
+            <button className="absolute top-4 right-4 text-2xl text-blue-900" onClick={toggleMenu}>
+              <img src={mainLogo} alt='logo'></img>
+            </button>
+            <Link
+              to="/"
+              className="text-blue-900 text-lg font-bold"
+              onClick={toggleMenu}
+            >
+              Home
+            </Link>
+            <Link
+              to="/aboutUs"
+              className="text-blue-900 text-lg font-bold"
+              onClick={toggleMenu}
+            >
+              About Us
+            </Link>
+            <Link
+              to="/ourServices"
+              className="text-blue-900 text-lg font-bold"
+              onClick={toggleMenu}
+            >
+              Our Services
+            </Link>
+            <Link
+              to="/contactUs"
+              className="text-blue-900 text-lg font-bold"
+              onClick={toggleMenu}
+            >
+              Contact Us
+            </Link>
+            <Link
+              to="/faqs"
+              className="text-blue-900 text-lg font-bold"
+              onClick={toggleMenu}
+            >
+              FAQs
+            </Link>
+            <Link
+              to="/applicationForm"
+              className="text-blue-900 text-lg font-bold"
+              onClick={toggleMenu}
+            >
+              Apply Now
+            </Link>
+          </div>
         </div>
 
         {/* Logo and Text for All Screens */}
@@ -46,12 +84,12 @@ const Navigation = () => {
 
       {/* Second Column for Larger Screens */}
       <div className="hidden md:flex space-x-6">
-        <Link to="/" className="text-blue-900">Home</Link>
-        <Link to="/aboutUs" className="text-blue-900">About Us</Link>
-        <Link to="/ourServices" className="text-blue-900">Our Services</Link>
-        <Link to="/contactUs" className="text-blue-900">Contact Us</Link>
-        <Link to="/faqs" className="text-blue-900">FAQs</Link>
-        <Link to="/applicationForm" className="text-blue-900">Apply Now</Link>
+        <Link to="/" className="text-blue-900 font-normal">Home</Link>
+        <Link to="/aboutUs" className="text-blue-900 font-normal">About Us</Link>
+        <Link to="/ourServices" className="text-blue-900 font-normal">Our Services</Link>
+        <Link to="/contactUs" className="text-blue-900 font-normal">Contact Us</Link>
+        <Link to="/faqs" className="text-blue-900 font-normal">FAQs</Link>
+        <Link to="/applicationForm" className="text-blue-900 font-normal">Apply Now</Link>
       </div>
     </nav>
   );
