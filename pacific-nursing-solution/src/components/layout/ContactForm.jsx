@@ -65,6 +65,7 @@ const ContactForm = () => {
               className="w-full p-5 border border-[#366510] rounded-full text-[#093761] placeholder-[#093761] bg-transparent focus:outline-none focus:ring-2 focus:ring-[#366510]"
               value={formData.fullName}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -78,6 +79,7 @@ const ContactForm = () => {
               className="w-full p-5 border border-[#366510] rounded-full text-[#093761] placeholder-[#093761] bg-transparent focus:outline-none focus:ring-2 focus:ring-[#366510]"
               value={formData.email}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -96,6 +98,7 @@ const ContactForm = () => {
                   checked={formData.currentEmployee === 'yes'}
                   onChange={handleChange}
                   className="mr-2"
+                  required
                 />
                 <label htmlFor="currentEmployeeYes" className="text-gray-700">
                   Yes
@@ -110,6 +113,7 @@ const ContactForm = () => {
                   checked={formData.currentEmployee === 'no'}
                   onChange={handleChange}
                   className="mr-2"
+                  required
                 />
                 <label htmlFor="currentEmployeeNo" className="text-gray-700">
                   No
@@ -133,6 +137,7 @@ const ContactForm = () => {
                   checked={formData.submittedApplication === 'yes'}
                   onChange={handleChange}
                   className="mr-2"
+                  required
                 />
                 <label htmlFor="submittedApplicationYes" className="text-gray-700">
                   Yes
@@ -147,6 +152,7 @@ const ContactForm = () => {
                   checked={formData.submittedApplication === 'no'}
                   onChange={handleChange}
                   className="mr-2"
+                  required
                 />
                 <label htmlFor="submittedApplicationNo" className="text-gray-700">
                   No

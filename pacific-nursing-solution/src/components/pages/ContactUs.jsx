@@ -7,6 +7,7 @@ import ApplicationNow from '../layout/ApplicationNow';
 import Footer from '../layout/Footer';
 
 const ContactUs = () => {
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -14,6 +15,7 @@ const ContactUs = () => {
     submittedApplication: '',
     message: '',
   });
+
   const [geoLocationUrl, setGeoLocationUrl] = useState('');
   const navigate = useNavigate();
 
@@ -89,6 +91,7 @@ const ContactUs = () => {
                 className="w-full p-5 border border-[#366510] rounded-full text-[#093761] placeholder-[#093761] bg-transparent focus:outline-none focus:ring-2 focus:ring-[#366510]"
                 value={formData.fullName}
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -102,6 +105,7 @@ const ContactUs = () => {
                 className="w-full p-5 border border-[#366510] rounded-full text-[#093761] placeholder-[#093761] bg-transparent focus:outline-none focus:ring-2 focus:ring-[#366510]"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -120,6 +124,7 @@ const ContactUs = () => {
                     checked={formData.currentEmployee === 'yes'}
                     onChange={handleChange}
                     className="mr-2"
+                    required
                   />
                   <label htmlFor="currentEmployeeYes" className="text-gray-700">
                     Yes
@@ -134,6 +139,7 @@ const ContactUs = () => {
                     checked={formData.currentEmployee === 'no'}
                     onChange={handleChange}
                     className="mr-2"
+                    required
                   />
                   <label htmlFor="currentEmployeeNo" className="text-gray-700">
                     No
