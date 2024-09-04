@@ -10,6 +10,10 @@ import { Link } from 'react-router-dom';
 const OurServices = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoverTimeout, setHoverTimeout] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState({
+    heroServices: false,
+    handsOnHero: false,
+  });
 
   const handleMouseEnter = (index) => {
     const timeout = setTimeout(() => {
@@ -29,9 +33,30 @@ const OurServices = () => {
     <>
       <Navigation />
       <div className="bg-primaryBackground">
-        <div>
-          <img src={heroServices} alt="Hero Services" className="w-full" />
-        </div>
+      <div className="relative">
+        {!imageLoaded.heroServices && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <img
+          src={heroServices}
+          alt=""
+          className={`w-full ${imageLoaded.heroServices ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, heroServices: true }))}
+        />
+      </div>
 
         <div className="flex flex-wrap items-center justify-center lg:mx-[200px] md:mx-[200px] sm:mx-[100px] mx-[50px]">
           {OurServicesSources.length > 0 ? (
@@ -88,9 +113,30 @@ const OurServices = () => {
           )}
         </div>
 
-        <div>
-          <img src={handsOnHero} alt="Hero Services" className="w-full" />
-        </div>
+        <div className="relative">
+        {!imageLoaded.handsOnHero && (
+          <div className="placeholder">
+            <div className="tetris-loader">
+              <div className="tetris-container">
+                <div className="block block1"></div>
+                <div className="block block2"></div>
+                <div className="block block3"></div>
+                <div className="block block4"></div>
+                <div className="block block5"></div>
+                <div className="block block6"></div>
+                <div className="block block7"></div>
+                <div className="block block8"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <img
+          src={handsOnHero}
+          alt=""
+          className={`w-full ${imageLoaded.handsOnHero ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setImageLoaded(prev => ({ ...prev, handsOnHero: true }))}
+        />
+      </div>
 
         <ApplicationNow />
         <ContactForm />
