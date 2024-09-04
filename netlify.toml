@@ -1,0 +1,10 @@
+
+[build]
+  functions = "netlify-functions" # Change this to your functions directory name
+
+[functions]
+directory = "netlify-functions"
+
+
+[[functions]]
+  path = "server"

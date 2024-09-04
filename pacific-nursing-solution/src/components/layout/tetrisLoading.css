@@ -1,0 +1,96 @@
+/* TetrisLoader.css */
+.tetris-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff; /* White background for contrast */
+  }
+  
+  .tetris-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 150px; /* Width to accommodate the falling blocks */
+    height: 150px; /* Height to accommodate the falling blocks */
+    position: relative;
+  }
+  
+  .block {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    position: absolute;
+    animation: fall 1.5s infinite ease-in-out;
+  }
+  
+  .block1 {
+    background-color: #6CBF2A;
+    top: 0;
+    left: 0;
+    animation-delay: 0.1s;
+  }
+  
+  .block2 {
+    background-color: #093761;
+    top: 0;
+    left: 34px;
+    animation-delay: 0.2s;
+  }
+  
+  .block3 {
+    background-color: #0E3D68;
+    top: 0;
+    left: 68px;
+    animation-delay: 0.3s;
+  }
+  
+  .block4 {
+    background-color: #C6E8FF;
+    top: 0;
+    left: 102px;
+    animation-delay: 0.4s;
+  }
+  
+  .block5 {
+    background-color: #6CBF2A;
+    top: 34px;
+    left: 17px;
+    animation-delay: 0.5s;
+  }
+  
+  .block6 {
+    background-color: #093761;
+    top: 34px;
+    left: 51px;
+    animation-delay: 0.6s;
+  }
+  
+  .block7 {
+    background-color: #0E3D68;
+    top: 34px;
+    left: 85px;
+    animation-delay: 0.7s;
+  }
+  
+  .block8 {
+    background-color: #C6E8FF;
+    top: 68px;
+    left: 34px;
+    animation-delay: 0.8s;
+  }
+  
+  @keyframes fall {
+    0% {
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+  }
+  
