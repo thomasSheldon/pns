@@ -5,6 +5,7 @@
     "nodemailer": "^6.9.14"
   },
  "scripts": {
+  "prestart": "npm install -g concurrently",
   "start": "npx concurrently \"npm run start:backend\" \"npm run start:frontend\"",
   "start:backend": "cd contact-form-backend && node server.js",
   "start:frontend": "cd pacific-nursing-solution && npm run dev"
