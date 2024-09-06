@@ -1,10 +1,6 @@
-
 [build]
-  functions = "netlify-functions" # Change this to your functions directory name
+  publish = "public" # This should be the directory you are deploying
+  command = "npm run build" # Make sure this command builds your site
 
 [functions]
-directory = "netlify-functions"
-
-
-[[functions]]
-  path = "server"
+  directory = "netlify/functions" # Path to your functions directory
