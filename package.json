@@ -2,12 +2,14 @@
   "dependencies": {
     "concurrently": "^7.6.0",
     "dotenv": "^16.4.5",
-    "nodemailer": "^6.9.14"
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.14",
+    "vite": "^5.4.3"
   },
- "scripts": {
-  "prestart": "npm install -g concurrently",
-  "start": "npx concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-  "start:backend": "cd contact-form-backend && node server.js",
-  "start:frontend": "cd pacific-nursing-solution && npm run dev"
-}
+  "scripts": {
+    "prestart": "npm install -g concurrently",
+    "start": "npx concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd contact-form-backend && node server.js",
+    "start:frontend": "cd pacific-nursing-solution && npm run dev"
+  }
 }
