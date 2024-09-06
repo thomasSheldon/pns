@@ -4,9 +4,9 @@
     "dotenv": "^16.4.5",
     "nodemailer": "^6.9.14"
   },
-  "scripts": {
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "start:backend": "cd contact-form-backend && node server.js",
-    "start:frontend": "cd pacific-nursing-solution && npm run dev"
-  }
+ "scripts": {
+  "start": "npx concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+  "start:backend": "cd contact-form-backend && node server.js",
+  "start:frontend": "cd pacific-nursing-solution && npm run dev"
+}
 }
