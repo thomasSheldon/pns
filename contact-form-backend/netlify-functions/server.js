@@ -45,7 +45,7 @@ async function getGeolocationData(ip) {
 app.post('/send-email', async (req, res) => {
   const { fullName, email, message, currentEmployee, submittedApplication, geoLocationUrl } = req.body;
   const dateTimeSent = getFormattedDateTime();
-  const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const clientIp = req.headers['x-forwarded-for'] || req.remoteAddress;
   const { country, region } = await getGeolocationData(clientIp);
 
   const mailOptions = {
@@ -94,7 +94,7 @@ app.post('/apply-now', upload.single('file'), async (req, res) => {
 
   const file = req.file;
   const dateTimeSent = getFormattedDateTime();
-  const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const clientIp = req.headers['x-forwarded-for'] || req.remoteAddress;
   const { country, region } = await getGeolocationData(clientIp);
 
   const mailOptions = {
@@ -142,7 +142,7 @@ app.post('/apply-now', upload.single('file'), async (req, res) => {
 app.post('/subscribe', async (req, res) => {
   const { email, geoLocationUrl } = req.body;
   const dateTimeSent = getFormattedDateTime();
-  const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const clientIp = req.headers['x-forwarded-for'] || req.remoteAddress;
   const { country, region } = await getGeolocationData(clientIp);
 
   const mailOptions = {
