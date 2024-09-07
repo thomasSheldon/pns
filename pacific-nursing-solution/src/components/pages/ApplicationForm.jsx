@@ -74,7 +74,7 @@ const ApplicationForm = () => {
     });
 
     try {
-      await axios.post("http://localhost:5000/apply-now", data, {
+      await axios.post("/.netlify/functions/server/apply-now", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
