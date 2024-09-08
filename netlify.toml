@@ -2,18 +2,32 @@
   functions = "contact-form-backend/netlify-functions"
   publish = "pacific-nursing-solution/dist"
 
+
 [build.environment]
   NODE_VERSION = "21"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/send-email"
+  to = "/.netlify/functions/send-email"
   status = 200
+  force = true
 
-[[functions]]
-  path = "send-email"
-  runtime = "nodejs14.x"
+[[redirects]]
+  from = "/api/apply-now"
+  to = "/.netlify/functions/apply-now"
+  status = 200
+  force = true
 
-[[functions]]
-  path = "apply-now"
-  runtime = "nodejs14.x"
+[[redirects]]
+  from = "/api/subscribe"
+  to = "/.netlify/functions/subscribe"
+  status = 200
+  force = true
+
+
+[functions]
+  # You can set the global runtime here if needed
+  # runtime = "nodejs14.x"
+  
+  # Add additional configuration for your functions if required
+  directory = "contact-form-backend/netlify-functions"
