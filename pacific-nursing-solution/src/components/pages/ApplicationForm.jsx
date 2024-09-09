@@ -62,8 +62,7 @@ const ApplicationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Prepare form data
+  
     const data = new FormData();
     Object.keys(formData).forEach((key) => {
       if (key === "file" && formData.file) {
@@ -72,14 +71,14 @@ const ApplicationForm = () => {
         data.append(key, formData[key]);
       }
     });
-
+  
     try {
-      await axios.post("/.netlify/functions/server/apply-now", data, {
+      await axios.post("/.netlify/functions/apply-now", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      navigate("/doneApplication"); // Redirect to doneApplication on success
+      navigate("/doneApplication");
     } catch (error) {
       console.error("Error submitting application:", error);
       alert("There was an error submitting your application.");

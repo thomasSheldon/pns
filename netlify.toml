@@ -2,7 +2,6 @@
   functions = "contact-form-backend/netlify-functions"
   publish = "pacific-nursing-solution/dist"
 
-
 [build.environment]
   NODE_VERSION = "21"
 
@@ -24,10 +23,9 @@
   status = 200
   force = true
 
+[dev]
+  targetPort = 3001
+  functions = "contact-form-backend/netlify-functions"
 
 [functions]
-  # You can set the global runtime here if needed
-  # runtime = "nodejs14.x"
-  
-  # Add additional configuration for your functions if required
   directory = "contact-form-backend/netlify-functions"

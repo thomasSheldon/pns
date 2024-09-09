@@ -22,7 +22,7 @@ const ContactForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/.netlify/functions/server/send-email', formData);
+      const response = await axios.post('/.netlify/functions/send-email', formData);
       if (response.data.success) {
         alert('Form submitted successfully');
         // Clear the form after submission if needed
