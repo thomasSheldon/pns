@@ -9,8 +9,7 @@
   },
   "scripts": {
     "prestart": "npm install -g concurrently",
-    "start": "npx concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "start:backend": "cd contact-form-backend && cd netlify-functions && node server.js",
+    "start": "npx concurrently \"npm run start:frontend\"",
     "start:frontend": "cd pacific-nursing-solution && npm run dev"
   }
 }

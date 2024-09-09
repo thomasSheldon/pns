@@ -6,19 +6,19 @@
   NODE_VERSION = "21"
 
 [[redirects]]
-  from = "/api/send-email"
+  from = "/send-email"
   to = "/.netlify/functions/send-email"
   status = 200
   force = true
 
 [[redirects]]
-  from = "/api/apply-now"
+  from = "/apply-now"
   to = "/.netlify/functions/apply-now"
   status = 200
   force = true
 
 [[redirects]]
-  from = "/api/subscribe"
+  from = "/subscribe"
   to = "/.netlify/functions/subscribe"
   status = 200
   force = true
