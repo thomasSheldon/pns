@@ -1,9 +1,7 @@
 [build]
   functions = "contact-form-backend/netlify-functions"
   publish = "pacific-nursing-solution/dist"
-
-[build.environment]
-  NODE_VERSION = "21"
+  environment = { NODE_VERSION = "21" }
 
 [[redirects]]
   from = "/send-email"
@@ -24,8 +22,9 @@
   force = true
 
 [dev]
-  targetPort = 3001
+  targetPort = 5174
   functions = "contact-form-backend/netlify-functions"
 
 [functions]
   directory = "contact-form-backend/netlify-functions"
+

@@ -17,7 +17,7 @@ const Footer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/.netlify/functions/subscribe", {
+      const response = await axios.post("/subscribe", {
         email: emailInput,
       });
       if (response.status === 200) {

@@ -1,5 +1,3 @@
-// contact-form-backend/netlify-functions/send-email.js
-
 const nodemailer = require('nodemailer');
 const ipinfo = require('ipinfo');
 
@@ -32,9 +30,26 @@ async function getGeolocationData(ip) {
 }
 
 exports.handler = async (event) => {
+  // Handle CORS preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // You can replace * with your frontend URL
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      },
+      body: JSON.stringify({ message: 'CORS preflight handled' }),
+    };
+  }
+
+  // Allow only POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // You can replace * with your frontend URL
+      },
       body: JSON.stringify({ message: 'Method Not Allowed' }),
     };
   }
@@ -66,12 +81,18 @@ exports.handler = async (event) => {
     console.log('Contact Form Email sent:', info.response);
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // You can replace * with your frontend URL
+      },
       body: JSON.stringify({ success: true, redirectUrl: '/doneContact' }),
     };
   } catch (error) {
     console.error('Error sending Contact Form email:', error);
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // You can replace * with your frontend URL
+      },
       body: JSON.stringify({ message: 'Error sending email', error: error.toString() }),
     };
   }

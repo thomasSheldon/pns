@@ -1,3 +1,4 @@
+require('dotenv').config();  // Load environment variables
 const express = require('express');
 const serverless = require('serverless-http');
 const nodemailer = require('nodemailer');

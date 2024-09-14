@@ -1,5 +1,5 @@
 // contact-form-backend/netlify-functions/subscribe.js
-
+// require('dotenv').config();  // Load environment variables
 const nodemailer = require('nodemailer');
 const ipinfo = require('ipinfo');
 
@@ -15,6 +15,8 @@ function getFormattedDateTime() {
   const now = new Date();
   return now.toLocaleString();
 }
+console.log('Email user:', process.env.EMAIL_USER);
+console.log('Email pass:', process.env.EMAIL_PASS ? '******' : 'Not Set');
 
 async function getGeolocationData(ip) {
   return new Promise((resolve, reject) => {

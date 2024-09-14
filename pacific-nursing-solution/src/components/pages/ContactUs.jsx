@@ -57,7 +57,7 @@ const ContactUs = () => {
   
     try {
       // Corrected endpoint path
-      const response = await axios.post('/.netlify/functions/send-email', dataToSend);
+      const response = await axios.post('/send-email', dataToSend);
       
       if (response.data.success) {
         navigate(response.data.redirectUrl); // Redirect to the new page
