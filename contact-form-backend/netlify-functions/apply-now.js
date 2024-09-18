@@ -1,16 +1,8 @@
-require('dotenv').config();  // Load environment variables
 const nodemailer = require('nodemailer');
-const multer = require('multer');
-const ipinfo = require('ipinfo');
+const { Buffer } = require('buffer');
+const { bucket } = require('./firebaseConfig');
 
-// Configure multer for handling file uploads with a file size limit (5MB)
-const storage = multer.memoryStorage();
-const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
-}).single('resume');
-
-// Nodemailer configuration for sending emails
+// Nodemailer configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -19,138 +11,120 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Function to format the current date and time
+// Function to get formatted date and time
 function getFormattedDateTime() {
   const now = new Date();
   return now.toLocaleString();
 }
 
-// Function to fetch geolocation data based on the client's IP address
-async function getGeolocationData(ip) {
-  return new Promise((resolve, reject) => {
-    ipinfo(ip, { token: process.env.IPINFO_API_KEY }, (err, cLoc) => {
-      if (err) {
-        console.error('Error fetching geolocation data:', err);
-        resolve({ country: 'Unknown', region: 'Unknown' });
-      } else {
-        resolve({ country: cLoc.country || 'Unknown', region: cLoc.region || 'Unknown' });
-      }
-    });
-  });
+// Function to upload resume to Firebase Storage
+async function uploadResumeToFirebase(fileBuffer, fileName) {
+  try {
+    const file = bucket.file(`resumes/${fileName}`);
+    
+    // Save the file to Firebase Storage
+    await file.save(fileBuffer);
+
+    // Make the file public
+    await file.makePublic();
+
+    // Get the public URL of the file
+    const downloadURL = `https://storage.googleapis.com/${bucket.name}/resumes/${fileName}`;
+    
+    return downloadURL;
+  } catch (error) {
+    console.error('Error uploading to Firebase:', error);
+    throw new Error('File upload failed');
+  }
 }
 
-// Lambda handler function for form submission
-exports.handler = async (event) => {
-  // Ensure the request is a POST request
+
+// Main handler function for Netlify
+const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      body: JSON.stringify({ message: 'Method Not Allowed' }),
+      body: 'Method Not Allowed',
     };
   }
 
-  return new Promise((resolve, reject) => {
-    // Convert the event body to a readable stream
-    const bufferStream = Buffer.from(event.body, 'base64');
-    const req = {
-      headers: { 'content-type': event.headers['content-type'] },
-      body: bufferStream,
-    };
+  try {
+    const contentType = event.headers['content-type'] || event.headers['Content-Type'];
 
-    // Handle form data and file upload
-    upload(req, {}, async (err) => {
-      if (err) {
-        if (err.code === 'LIMIT_FILE_SIZE') {
-          return resolve({
-            statusCode: 413, // Payload Too Large
-            body: JSON.stringify({ message: 'File size exceeds the limit of 5MB' }),
-          });
+    // Decode the base64-encoded body (since Netlify passes form data as base64)
+    const bodyBuffer = Buffer.from(event.body, 'base64');
+
+    // Parse form data (assumes multipart/form-data)
+    const boundary = contentType.split('boundary=')[1];
+    const parts = bodyBuffer.toString().split(`--${boundary}`);
+
+    // Extract fields and files from the parsed form data
+    const fieldValues = {};
+    let resumeBuffer = null;
+    let fileName = null;
+
+    parts.forEach((part) => {
+      const [header, content] = part.split('\r\n\r\n');
+      if (header && content) {
+        const nameMatch = header.match(/name="(.+?)"/);
+        const fileNameMatch = header.match(/filename="(.+?)"/);
+        if (nameMatch && !fileNameMatch) {
+          // This is a form field
+          const fieldName = nameMatch[1];
+          fieldValues[fieldName] = content.trim();
+        } else if (fileNameMatch) {
+          // This is a file
+          fileName = fileNameMatch[1];
+          resumeBuffer = Buffer.from(content, 'binary');
         }
-        console.error('Error processing form data:', err);
-        return resolve({
-          statusCode: 500,
-          body: JSON.stringify({ message: 'Error processing form data' }),
-        });
-      }
-
-      // Parse form data from the request
-      const formData = JSON.parse(req.body.toString());
-
-      // Validate that all required fields are present
-      const requiredFields = [
-        'firstName', 'lastName', 'contactNumber', 'email',
-        'dob', 'location', 'registeredNurse', 'bsnDegree',
-        'immigrationPetition', 'currentEmployee', 'submittedApplication', 'questions'
-      ];
-
-      for (const field of requiredFields) {
-        if (!formData[field]) {
-          return resolve({
-            statusCode: 400, // Bad Request
-            body: JSON.stringify({ message: `Missing required field: ${field}` }),
-          });
-        }
-      }
-
-      // Get the current date and time
-      const dateTimeSent = getFormattedDateTime();
-
-      // Get the client's IP address from headers
-      const clientIp = event.headers['x-forwarded-for'] || event.requestContext.identity.sourceIp;
-      
-      // Fetch geolocation data based on the client's IP address
-      const { country, region } = await getGeolocationData(clientIp);
-
-      // Construct the email body with the provided form data
-      const emailText = `
-        First Name: ${formData.firstName}
-        Last Name: ${formData.lastName}
-        Contact Number: ${formData.contactNumber}
-        Email: ${formData.email}
-        Date of Birth: ${formData.dob}
-        Location: ${formData.location}
-        Registered Nurse: ${formData.registeredNurse}
-        BSN Degree: ${formData.bsnDegree}
-        Immigration Petition: ${formData.immigrationPetition}
-        Current Employee: ${formData.currentEmployee}
-        Submitted Application: ${formData.submittedApplication}
-        Questions: ${formData.questions}
-        Geolocation URL: View on Google Maps: https://www.google.com/maps?q=${country},${region}
-        Date and Time Sent: ${dateTimeSent}
-        Country: ${country}
-        Region: ${region}
-      `;
-
-      // Email options with the resume file attachment
-      const mailOptions = {
-        from: formData.email,
-        to: process.env.EMAIL_USER,
-        subject: 'New Application Form Submission',
-        text: emailText,
-        attachments: req.file ? [
-          {
-            filename: req.file.originalname,
-            content: req.file.buffer,
-            contentType: req.file.mimetype,
-          },
-        ] : [],
-      };
-
-      // Send the email
-      try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Application Form Email sent:', info.response);
-        resolve({
-          statusCode: 200,
-          body: JSON.stringify({ success: true, redirectUrl: '/doneApplication' }),
-        });
-      } catch (error) {
-        console.error('Error sending Application Form email:', error);
-        resolve({
-          statusCode: 500,
-          body: JSON.stringify({ message: 'Error sending email', error: error.toString() }),
-        });
       }
     });
-  });
+
+    // If a resume was uploaded, save it to Firebase
+    if (resumeBuffer && fileName) {
+      const resumeUrl = await uploadResumeToFirebase(resumeBuffer, fileName);
+      fieldValues.resumeUrl = resumeUrl;
+    }
+
+    // Prepare the email body
+    const emailText = `
+      First Name: ${fieldValues.firstName}
+      Last Name: ${fieldValues.lastName}
+      Contact Number: ${fieldValues.contactNumber}
+      Email: ${fieldValues.email}
+      Date of Birth: ${fieldValues.dob}
+      Location: ${fieldValues.location}
+      Registered Nurse: ${fieldValues.registeredNurse}
+      BSN Degree: ${fieldValues.bsnDegree}
+      Immigration Petition: ${fieldValues.immigrationPetition}
+      Current Employee: ${fieldValues.currentEmployee}
+      Submitted Application: ${fieldValues.submittedApplication}
+      Questions: ${fieldValues.questions}
+      Resume URL: ${fieldValues.resumeUrl}
+      Date and Time Sent: ${getFormattedDateTime()}
+    `;
+
+    // Send email
+    const mailOptions = {
+      from: fieldValues.email,
+      to: process.env.EMAIL_USER,
+      subject: 'New Application Form Submission',
+      text: emailText,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ success: true, redirectUrl: '/doneApplication' }),
+    };
+  } catch (error) {
+    console.error('Error processing form:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Error processing form', error: error.toString() }),
+    };
+  }
 };
+
+module.exports = { handler };

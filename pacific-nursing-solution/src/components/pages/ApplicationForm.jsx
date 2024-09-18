@@ -20,16 +20,16 @@ const ApplicationForm = () => {
     currentEmployee: "",
     submittedApplication: "",
     questions: "",
-    file: null,
-    geoLocationUrl: "", // Ensure this is part of the formData state
+    file: null, // File input for the resume
+    geoLocationUrl: "", // Geolocation URL
   });
 
+  // Geolocation fetch on component mount
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          // Create a Google Maps link with the latitude and longitude
           const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
           setFormData((prev) => ({
             ...prev,
@@ -37,14 +37,15 @@ const ApplicationForm = () => {
           }));
         },
         (error) => {
-          console.error('Error fetching geolocation:', error);
+          console.error("Error fetching geolocation:", error);
         }
       );
     } else {
-      console.error('Geolocation is not supported by this browser.');
+      console.error("Geolocation is not supported by this browser.");
     }
   }, []);
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -53,6 +54,7 @@ const ApplicationForm = () => {
     }));
   };
 
+  // Handle file change
   const handleFileChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -60,30 +62,41 @@ const ApplicationForm = () => {
     }));
   };
 
+  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    
     const data = new FormData();
+    
+    // Append form data to FormData object
     Object.keys(formData).forEach((key) => {
       if (key === "file" && formData.file) {
-        data.append(key, formData.file);
+        data.append(key, formData.file); // Append the file if present
       } else {
-        data.append(key, formData[key]);
+        data.append(key, formData[key]); // Append other form fields
       }
     });
-  
+
     try {
-      await axios.post("/apply-now", data, {
+      // Send form data to the backend via POST request
+      const response = await axios.post("/apply-now", data, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data", // Ensure multipart for file upload
         },
       });
-      navigate("/doneApplication");
+      
+      // Handle successful form submission
+      if (response.data.success) {
+        navigate("/doneApplication"); // Redirect upon success
+      } else {
+        alert("There was an issue with your submission.");
+      }
     } catch (error) {
       console.error("Error submitting application:", error);
       alert("There was an error submitting your application.");
     }
   };
+
   return (
     <section className="bg-primaryBackground">
       <Navigation />
@@ -92,7 +105,7 @@ const ApplicationForm = () => {
       </div>
 
       <div className="flex flex-col items-center text-[#093761] px-4 py-8">
-        <form onSubmit={handleSubmit} className="w-full max-w-4xl">
+        <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit} className="w-full max-w-4xl">
           {/* Two-column layout with three rows each */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
