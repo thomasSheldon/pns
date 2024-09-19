@@ -17,20 +17,38 @@ function getFormattedDateTime() {
   return now.toLocaleString();
 }
 
+// Function to sanitize file name
+function sanitizeFileName(fileName) {
+  const nameWithoutExtension = fileName.split('.').slice(0, -1).join('.');
+  const extension = fileName.split('.').pop();
+  return `${nameWithoutExtension.replace(/[^a-zA-Z0-9]/g, '_')}.${extension}`;
+}
+
 // Function to upload resume to Firebase Storage
 async function uploadResumeToFirebase(fileBuffer, fileName) {
   try {
-    const file = bucket.file(`resumes/${fileName}`);
-    
-    // Save the file to Firebase Storage
-    await file.save(fileBuffer);
+    const sanitizedFileName = sanitizeFileName(fileName);
+    const file = bucket.file(`resumes/${sanitizedFileName}`);
+
+    // Log before saving
+    console.log(`Saving file ${sanitizedFileName} to Firebase`);
+
+    // Save the file to Firebase Storage with the correct MIME type
+    await file.save(fileBuffer, {
+      metadata: { contentType: 'application/pdf' },
+    });
 
     // Make the file public
     await file.makePublic();
 
-    // Get the public URL of the file
-    const downloadURL = `https://storage.googleapis.com/${bucket.name}/resumes/${fileName}`;
+    // Get the public URL
+    const [metadata] = await file.getMetadata();
+    const downloadToken = metadata?.metadata?.firebaseStorageDownloadTokens;
+    const downloadURL = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(`resumes/${sanitizedFileName}`)}?alt=media&token=${downloadToken}`;
     
+    console.log(`File uploaded successfully. Metadata:`, metadata);
+    console.log(`File accessible at: ${downloadURL}`);
+
     return downloadURL;
   } catch (error) {
     console.error('Error uploading to Firebase:', error);
@@ -38,6 +56,30 @@ async function uploadResumeToFirebase(fileBuffer, fileName) {
   }
 }
 
+
+// Function to extract file data from multipart form data
+function extractFileData(parts, boundary) {
+  let resumeBuffer = null;
+  let fileName = null;
+
+  parts.forEach((part) => {
+    const [header, content] = part.split('\r\n\r\n');
+    if (header && content) {
+      const fileNameMatch = header.match(/filename="(.+?)"/);
+      if (fileNameMatch) {
+        fileName = fileNameMatch[1];
+        const contentTypeMatch = header.match(/Content-Type: (.+)/);
+        if (contentTypeMatch && contentTypeMatch[1] === 'application/pdf') {
+          // Clean content from boundary markers and extra newlines
+          const cleanedContent = content.split(`--${boundary}`)[0].trim();
+          resumeBuffer = Buffer.from(cleanedContent, 'binary');
+        }
+      }
+    }
+  });
+
+  return { resumeBuffer, fileName };
+}
 
 // Main handler function for Netlify
 const handler = async (event) => {
@@ -51,40 +93,41 @@ const handler = async (event) => {
   try {
     const contentType = event.headers['content-type'] || event.headers['Content-Type'];
 
-    // Decode the base64-encoded body (since Netlify passes form data as base64)
+    if (!contentType || !contentType.includes('boundary=')) {
+      throw new Error('Content-Type header missing or invalid');
+    }
+
     const bodyBuffer = Buffer.from(event.body, 'base64');
-
-    // Parse form data (assumes multipart/form-data)
     const boundary = contentType.split('boundary=')[1];
-    const parts = bodyBuffer.toString().split(`--${boundary}`);
+    const parts = bodyBuffer.toString('binary').split(`--${boundary}`);
 
-    // Extract fields and files from the parsed form data
     const fieldValues = {};
     let resumeBuffer = null;
     let fileName = null;
 
-    parts.forEach((part) => {
-      const [header, content] = part.split('\r\n\r\n');
-      if (header && content) {
-        const nameMatch = header.match(/name="(.+?)"/);
-        const fileNameMatch = header.match(/filename="(.+?)"/);
-        if (nameMatch && !fileNameMatch) {
-          // This is a form field
-          const fieldName = nameMatch[1];
-          fieldValues[fieldName] = content.trim();
-        } else if (fileNameMatch) {
-          // This is a file
-          fileName = fileNameMatch[1];
-          resumeBuffer = Buffer.from(content, 'binary');
-        }
-      }
-    });
+    // Extract file data with boundary
+    const { resumeBuffer: extractedBuffer, fileName: extractedFileName } = extractFileData(parts, boundary);
+    resumeBuffer = extractedBuffer;
+    fileName = extractedFileName;
 
-    // If a resume was uploaded, save it to Firebase
     if (resumeBuffer && fileName) {
       const resumeUrl = await uploadResumeToFirebase(resumeBuffer, fileName);
       fieldValues.resumeUrl = resumeUrl;
     }
+
+    // Extract form fields
+    parts.forEach((part) => {
+      const [header, content] = part.split('\r\n\r\n');
+      if (header && content) {
+        const nameMatch = header.match(/name="(.+?)"/);
+        if (nameMatch) {
+          const fieldName = nameMatch[1];
+          if (!fileName || !header.match(/filename="(.+?)"/)) {
+            fieldValues[fieldName] = content.trim();
+          }
+        }
+      }
+    });
 
     // Prepare the email body
     const emailText = `
@@ -104,7 +147,6 @@ const handler = async (event) => {
       Date and Time Sent: ${getFormattedDateTime()}
     `;
 
-    // Send email
     const mailOptions = {
       from: fieldValues.email,
       to: process.env.EMAIL_USER,

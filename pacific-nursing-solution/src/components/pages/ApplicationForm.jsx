@@ -24,6 +24,9 @@ const ApplicationForm = () => {
     geoLocationUrl: "", // Geolocation URL
   });
 
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // Add a loading state
+
   // Geolocation fetch on component mount
   useEffect(() => {
     if (navigator.geolocation) {
@@ -56,16 +59,25 @@ const ApplicationForm = () => {
 
   // Handle file change
   const handleFileChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      file: e.target.files[0],
-    }));
+    const file = e.target.files[0];
+    if (file && file.type !== "application/pdf") {
+      setErrors({ file: "Only PDF files are allowed." });
+    } else if (file && file.size > 5 * 1024 * 1024) {
+      setErrors({ file: "File size must be less than 5MB." });
+    } else {
+      setErrors((prev) => ({ ...prev, file: "" })); // Clear file errors
+      setFormData((prev) => ({
+        ...prev,
+        file,
+      }));
+    }
   };
+
 
   // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setLoading(true); // Set loading to true when form is submitted
     const data = new FormData();
     
     // Append form data to FormData object
@@ -85,18 +97,19 @@ const ApplicationForm = () => {
         },
       });
       
-      // Handle successful form submission
       if (response.data.success) {
-        navigate("/doneApplication"); // Redirect upon success
+        navigate("/doneApplication");
       } else {
-        alert("There was an issue with your submission.");
+        setErrors({ general: "There was an issue with your submission." });
       }
     } catch (error) {
-      console.error("Error submitting application:", error);
-      alert("There was an error submitting your application.");
+      setErrors({ general: "There was an error submitting your application." });
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
+  
   return (
     <section className="bg-primaryBackground">
       <Navigation />
@@ -106,6 +119,11 @@ const ApplicationForm = () => {
 
       <div className="flex flex-col items-center text-[#093761] px-4 py-8">
         <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit} className="w-full max-w-4xl">
+           {/* Display error messages */}
+           {errors.general && <div className="text-red-500 mb-4">{errors.general}</div>}
+
+          {/* Form fields go here */}
+          {/* Include the existing fields for name, contact, etc. */}
           {/* Two-column layout with three rows each */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
@@ -226,6 +244,7 @@ const ApplicationForm = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mb-6">
+            <div>
               <input
                 type="file"
                 name="file"
@@ -234,6 +253,8 @@ const ApplicationForm = () => {
                 required
                 className="file:border file:bg-[#093761] file:text-white file:py-2 file:px-4 file:rounded-full"
               />
+              {errors.file && <div className="text-red-500">{errors.file}</div>}
+            </div>
               <button
                 type="button"
                 onClick={() => setFormData((prev) => ({ ...prev, file: null }))}
@@ -267,11 +288,12 @@ const ApplicationForm = () => {
           </div>
 
           <div className="flex justify-start py-8">
-            <button
+          <button
               type="submit"
-              className="bg-[#093761] text-white px-8 py-4 rounded-full"
+              className={`bg-[#093761] text-white px-8 py-4 rounded-full ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+              disabled={loading}
             >
-              Submit Application
+              {loading ? "Submitting..." : "Submit Application"}
             </button>
           </div>
         </form>
