@@ -24,6 +24,10 @@ export default defineConfig({
   plugins: [react(), svgr()],
   server: {
     port: 5174,
+    proxy: {
+      // This proxy helps redirect API calls from the frontend to the backend
+      '/api': 'http://localhost:8888',
+    },
   },
 });
 
