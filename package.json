@@ -11,6 +11,11 @@
   "scripts": {
     "prestart": "npm install -g concurrently",
     "start": "npx concurrently \"npm run start:frontend\"",
-    "start:frontend": "cd pacific-nursing-solution && npm run dev"
+    "start:frontend": "cd pacific-nursing-solution && npm run dev",
+    "build": "cd pacific-nursing-solution && npm run build",
+    "deploy": "npm run build && npm run deploy:frontend"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
