@@ -26,5 +26,9 @@ export default defineConfig({
         'axios' // Externalize axios
       ],
     },
+      target: 'esnext',
+      minify: true,
+      assetsInlineLimit: 4096,
+      chunkSizeWarningLimit: 1000, // Increase the limit if needed
   },
 });

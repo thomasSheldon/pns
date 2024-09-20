@@ -1,12 +1,10 @@
-// TetrisLoader.jsx
 import React from "react";
-import "./tetrisLoading.css"; // Ensure this CSS file is correctly linked
+import "./tetrisLoading.css";
 
 const TetrisLoading = () => {
   return (
-    <div className="tetris-loader">
+    <div className="tetris-loader" aria-busy="true" aria-live="polite">
       <div className="tetris-container">
-        {/* Adding multiple blocks with different colors and staggered animations */}
         <div className="block block1"></div>
         <div className="block block2"></div>
         <div className="block block3"></div>
