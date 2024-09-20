@@ -16,6 +16,6 @@
     "deploy": "npm run build && npm run deploy:frontend"
   },
   "engines": {
-    "node": "16.x"
+    "node": "21.x"
   }
 }
