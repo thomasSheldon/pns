@@ -23,7 +23,8 @@ export default defineConfig({
         'react/jsx-runtime', 
         'react-dom/client', 
         'react-router-dom', // Externalize react-router-dom
-        'axios' // Externalize axios
+        'axios', // Externalize axios
+        'prop-types'
       ],
     },
       target: 'esnext',
