@@ -6,6 +6,9 @@
 [context.production.environment]
   NODE_VERSION = "16.18.0"
 
+[build.environment]
+NODE_OPTIONS = "--max-old-space-size=4096"
+
 [[redirects]]
   from = "/send-email"
   to = "/.netlify/functions/send-email"
