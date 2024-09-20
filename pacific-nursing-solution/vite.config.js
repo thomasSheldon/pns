@@ -29,5 +29,10 @@ export default defineConfig({
       '/api': 'http://localhost:8888',
     },
   },
+  build: {
+    rollupOptions: {
+      external: ['react/jsx-runtime'],
+    },
+  },
 });
 
