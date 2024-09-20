@@ -7,10 +7,9 @@ export default defineConfig({
   server: {
     port: 5174,
     proxy: {
-      // This proxy helps redirect API calls from the frontend to the backend
       '/api': 'http://localhost:8888',
       '/.netlify/functions': {
-        target: 'http://localhost:8888', // Ensure this is your local server for functions
+        target: 'http://localhost:8888',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/.netlify\/functions/, ''),
       },
@@ -23,7 +22,8 @@ export default defineConfig({
         'react-dom', 
         'react/jsx-runtime', 
         'react-dom/client', 
-        'react-router-dom' // Externalize react-router-dom
+        'react-router-dom', // Externalize react-router-dom
+        'axios' // Externalize axios
       ],
     },
   },
