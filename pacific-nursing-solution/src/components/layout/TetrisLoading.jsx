@@ -1,6 +1,6 @@
 // TetrisLoader.jsx
 import React from "react";
-import "./TetrisLoading.css"; // Ensure this CSS file is correctly linked
+import "./tetrisLoading.css"; // Ensure this CSS file is correctly linked
 
 const TetrisLoading = () => {
   return (
