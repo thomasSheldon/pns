@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "cd pacific-nursing-solution && npm run build"
   functions = "contact-form-backend/netlify-functions"
   publish = "pacific-nursing-solution/dist"
 
