@@ -7,7 +7,8 @@
     "firebase": "^10.13.1",
     "formidable": "^3.5.1",
     "nodemailer": "^6.9.14",
-    "vite": "^5.4.3"
+    "vite": "^5.4.3",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "scripts": {
     "prestart": "npm install -g concurrently",
