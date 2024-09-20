@@ -3,7 +3,6 @@ import Navigation from "../layout/Navigation";
 import homePageHero from "../../assets/homePageHero.svg";
 import { homePageOption } from "../../constants";
 import Button from "../layout/Button";
-import { application } from "../../assets/homePageButton";
 import ContactForm from "../layout/ContactForm";
 import Footer from "../layout/Footer";
 import ApplicationNow from "../layout/ApplicationNow";

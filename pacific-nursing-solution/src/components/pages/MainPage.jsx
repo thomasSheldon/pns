@@ -6,7 +6,6 @@ import AboutUs from "./AboutUs";
 import ApplicationForm from "./ApplicationForm";
 import ContactUs from "./ContactUs";
 import Faqs from "./Faqs";
-import ApplyNow from "./ApplyNow";
 import Home from "./Home";
 import TetrisLoading from "../layout/TetrisLoading";
 import DoneApplication from "../layout/DoneApplication";
@@ -37,7 +36,6 @@ function App() {
           <Route path="/applicationForm" element={<ApplicationForm />} />
           <Route path="/contactUs" element={<ContactUs />} />
           <Route path="/faqs" element={<Faqs />} />
-          <Route path="/applyNow" element={<ApplyNow />} />
           <Route path="/doneApplication" element={<DoneApplication />} />
           <Route path="/doneContact" element={<DoneContact />} />
         </Routes>

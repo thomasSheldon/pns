@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from "react";
+import React, { useState } from "react";
 import Navigation from "../layout/Navigation";
 import {
   homeHero,

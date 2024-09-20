@@ -1,21 +1,16 @@
-import { useState } from 'react';
-import { UserProvider } from './components/userContext/UserContext';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css'
-import MainPage from './components/pages/MainPage'
-
-
-import './App.css'
+import MainPage from './components/pages/MainPage';
+import './App.css';
 
 function App() {
 
   return (
-    <UserProvider>
-      <BrowserRouter>
-        <MainPage />
-      </BrowserRouter>
-    </UserProvider>
+    <BrowserRouter>
+      <MainPage />
+    </BrowserRouter>
   )
 }
 
-export default App
+export default App;
