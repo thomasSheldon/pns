@@ -3,12 +3,6 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      react: 'react',
-      'react/jsx-runtime': 'react/jsx-runtime',
-    },
-  },
   plugins: [react(), svgr()],
   server: {
     port: 5174,
@@ -28,10 +22,9 @@ export default defineConfig({
         format: 'es',
       },
       external: [
-        'react/jsx-runtime', 
-        'react-router-dom', 
-        'axios', 
-        'prop-types'
+        'react-router-dom',
+        'axios',
+        'prop-types',
       ],
     },
     target: 'esnext',
