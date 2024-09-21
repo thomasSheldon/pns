@@ -22,7 +22,7 @@ export default defineConfig({
         format: 'es',
       },
       external: [
-        'react-router-dom',
+        // 'react-router-dom',
         'axios',
         'prop-types',
       ],
