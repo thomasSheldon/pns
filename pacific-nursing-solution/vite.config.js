@@ -5,8 +5,8 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
   resolve: {
     alias: {
-      react: require.resolve('react'),
-      'react/jsx-runtime': require.resolve('react/jsx-runtime'),
+      react: 'react',
+      'react/jsx-runtime': 'react/jsx-runtime',
     },
   },
   plugins: [react(), svgr()],
