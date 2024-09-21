@@ -28,6 +28,6 @@
     "deploy": "npm run build && npm run deploy:frontend"
   },
   "engines": {
-    "node": "14.x"
+    "node": ">=16.x"
   }
 }
