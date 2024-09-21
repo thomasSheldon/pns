@@ -17,6 +17,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      output: {
+        // Ensure the format is set correctly
+        format: 'es',
+      },
       external: [
         // 'react', 
         // 'react-dom', 
