@@ -37,4 +37,7 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000,
   },
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
 });
