@@ -16,7 +16,14 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist', 
+    outDir: 'dist',
+    resolve: {
+      alias: {
+        // Add this line if you don't have it
+        react: 'react',
+        'react/jsx-runtime': 'react/jsx-runtime',
+      },
+    },
     rollupOptions: {
       output: {
         // Ensure the format is set correctly
