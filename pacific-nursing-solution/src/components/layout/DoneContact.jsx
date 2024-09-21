@@ -1,4 +1,3 @@
-import React from "react";
 import { doneApplicationHero } from "../../assets/homePageButton";
 import Button from "./Button";
 import { Link } from "react-router-dom";
