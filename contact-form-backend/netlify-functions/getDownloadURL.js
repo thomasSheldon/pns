@@ -1,10 +1,17 @@
 const admin = require('firebase-admin');
 const { getStorage } = require('firebase-admin/storage');
+const fs = require('fs');
 
-admin.initializeApp({
-  credential: admin.credential.cert(require('../../path_to_your_service_account.json')),
-  storageBucket: 'pnsupload-de885.appspot.com',
-});
+// Initialize Firebase Admin SDK
+if (!admin.apps.length) {
+  const base64EncodedKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_BASE64;
+  const serviceAccountJson = Buffer.from(base64EncodedKey, 'base64').toString('ascii');
+
+  admin.initializeApp({
+    credential: admin.credential.cert(JSON.parse(serviceAccountJson)),
+    storageBucket: 'pnsupload-de885.appspot.com',
+  });
+}
 
 const storage = getStorage();
 const bucket = storage.bucket();
@@ -18,7 +25,7 @@ exports.handler = async (event) => {
 
     const [url] = await file.getSignedUrl({
       action: 'read',
-      expires: '03-09-2491' // or use a more reasonable expiration time
+      expires: '03-09-2491', // or use a more reasonable expiration time
     });
 
     return {

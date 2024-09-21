@@ -3,13 +3,17 @@
 // netlify/functions/firebaseConfig.js
 const admin = require('firebase-admin');
 const { getStorage } = require('firebase-admin/storage');
+const fs = require('fs');
 
 // Ensure Firebase Admin SDK is initialized only once
 if (!admin.apps.length) {
-  const serviceAccount = require('../serviceAccountKey.json'); // Adjust path as needed
-
+  // Decode the Base64-encoded service account key from environment variable
+  const base64EncodedKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_BASE64;
+  const serviceAccountJson = Buffer.from(base64EncodedKey, 'base64').toString('ascii');
+  
+  // Initialize Firebase Admin SDK with the decoded service account
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(JSON.parse(serviceAccountJson)),
     storageBucket: "pnsupload-de885.appspot.com" // Your Firebase Storage bucket name
   });
 }
@@ -19,6 +23,7 @@ const storage = getStorage();
 const bucket = storage.bucket(); // Reference the storage bucket
 
 module.exports = { storage, bucket };
+
 
 // // netlify/functions/firebaseConfig.js
 // const { initializeApp, applicationDefault } = require('firebase-admin/app');
