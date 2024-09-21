@@ -3,6 +3,12 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      react: require.resolve('react'),
+      'react/jsx-runtime': require.resolve('react/jsx-runtime'),
+    },
+  },
   plugins: [react(), svgr()],
   server: {
     port: 5174,
@@ -17,31 +23,20 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    resolve: {
-      alias: {
-        // Add this line if you don't have it
-        react: 'react',
-        'react/jsx-runtime': 'react/jsx-runtime',
-      },
-    },
     rollupOptions: {
       output: {
-        // Ensure the format is set correctly
         format: 'es',
       },
       external: [
-        // 'react', 
-        // 'react-dom', 
         'react/jsx-runtime', 
-        // 'react-dom/client', 
-        'react-router-dom', // Externalize react-router-dom
-        'axios', // Externalize axios
+        'react-router-dom', 
+        'axios', 
         'prop-types'
       ],
     },
-      target: 'esnext',
-      minify: true,
-      assetsInlineLimit: 4096,
-      chunkSizeWarningLimit: 1000, // Increase the limit if needed
+    target: 'esnext',
+    minify: true,
+    assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 1000,
   },
 });
