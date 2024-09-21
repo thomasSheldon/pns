@@ -4,7 +4,7 @@
   publish = "pacific-nursing-solution/dist"
 
 [context.production.environment]
-  NODE_VERSION = "20.x"
+  NODE_VERSION = "18.x"
 
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=4096"
