@@ -24,7 +24,7 @@ export default defineConfig({
       external: [
         // 'react-router-dom',
         'axios',
-        'prop-types',
+        // 'prop-types',
       ],
     },
     target: 'esnext',
