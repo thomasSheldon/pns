@@ -22,7 +22,7 @@ export default defineConfig({
         // 'react-dom', 
         // 'react/jsx-runtime', 
         // 'react-dom/client', 
-        // 'react-router-dom', // Externalize react-router-dom
+        'react-router-dom', // Externalize react-router-dom
         // 'axios', // Externalize axios
         // 'prop-types'
       ],
