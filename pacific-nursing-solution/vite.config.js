@@ -18,13 +18,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: [
-        'react', 
-        'react-dom', 
-        'react/jsx-runtime', 
-        'react-dom/client', 
-        'react-router-dom', // Externalize react-router-dom
-        'axios', // Externalize axios
-        'prop-types'
+        // 'react', 
+        // 'react-dom', 
+        // 'react/jsx-runtime', 
+        // 'react-dom/client', 
+        // 'react-router-dom', // Externalize react-router-dom
+        // 'axios', // Externalize axios
+        // 'prop-types'
       ],
     },
       target: 'esnext',
