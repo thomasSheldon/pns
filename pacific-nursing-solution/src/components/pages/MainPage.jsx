@@ -10,7 +10,7 @@ import Home from "./Home";
 import TetrisLoading from "../layout/TetrisLoading";
 import DoneApplication from "../layout/DoneApplication";
 import DoneContact from "../layout/DoneContact";
-function App() {
+function MainPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -44,4 +44,4 @@ function App() {
   );
 }
 
-export default App;
+export default MainPage;
