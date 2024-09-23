@@ -74,7 +74,7 @@ const ContactUs = () => {
   return (
     <section className="bg-primaryBackground">
       <Navigation />
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center lg:px-[300px]">
         <img src={contactUsHero} alt="Contact Us Hero" />
       </div>
 

@@ -1,0 +1,20 @@
+{
+	"siteId": "be77ec35-ec3b-4c14-811e-1dfa00ebf4f0",
+	"geolocation": {
+		"data": {
+			"city": "Makati City",
+			"country": {
+				"code": "PH",
+				"name": "Philippines"
+			},
+			"subdivision": {
+				"code": "00",
+				"name": "Metro Manila"
+			},
+			"timezone": "Asia/Manila",
+			"latitude": 14.5513,
+			"longitude": 121.0411
+		},
+		"timestamp": 1726276508950
+	}
+}
