@@ -1,5 +1,5 @@
 [build]
-  command = "cd pacific-nursing-solution && npm ci && npm run build"
+  command = "npm install && cd pacific-nursing-solution && npm run build"
   publish = "pacific-nursing-solution/dist"
     cache = false 
 

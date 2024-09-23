@@ -19,7 +19,8 @@
     "react-router-dom": "^5.3.0",
     "serverless-http": "^3.2.0",
     "tailwindcss": "^3.4.12",
-    "vite-plugin-svgr": "^4.2.0"
+    "vite-plugin-svgr": "^4.2.0",
+    "@vitejs/plugin-react": "^4.3.1"
   },
   "scripts": {
     "prestart": "npm install -g concurrently",
@@ -32,7 +33,6 @@
     "node": ">=16.x"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
     "vite": "^5.4.7"
   }
 }
