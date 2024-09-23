@@ -22,7 +22,7 @@ export default defineConfig({
         format: 'es',
       },
       external: [
-        'axios',
+        // 'axios',
         // You can include 'react' and 'react-dom' here if needed
       ],
     },
