@@ -1,0 +1,19 @@
+[build]
+  functions = "contact-form-backend/netlify-functions"
+  publish = "pacific-nursing-solution/dist"
+
+[build.environment]
+  NODE_VERSION = "21"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[functions]]
+  path = "send-email"
+  runtime = "nodejs14.x"
+
+[[functions]]
+  path = "apply-now"
+  runtime = "nodejs14.x"

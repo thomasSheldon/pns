@@ -9,7 +9,9 @@ const DoneApplication = () => {
       <p className="italic mb-4 text-[#4478AD] lg:text-[12px] md:text-[10px] sm:text-[9px] text-[8px]">
         We are excited to have you on our Pacific Nursing Solutions team!
       </p>
-      <img src={doneApplicationHero} alt="" className="mb-4" />
+      <div className="flex items-center justify-center py-8" >
+         <img src={doneApplicationHero} alt="" className="mb-4" />
+      </div>
       <p className="mb-6 lg:px-20 md:px-14 sm:px-10 px-6 text-[#002245] font-medium lg:text-[20px] md:text-[18px] sm:text-[14px] text-[12px] max-w-[881px]">
         Thank you for submitting your application! We have successfully received
         your form. Please check your email for updates or contact us for more
