@@ -1,6 +1,7 @@
 [build]
   command = "cd pacific-nursing-solution && npm ci && npm run build"
   publish = "pacific-nursing-solution/dist"
+    cache = false 
 
 [context.production.environment]
   NODE_VERSION = "18"
