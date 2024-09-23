@@ -30,6 +30,7 @@ function MainPage() {
       ) : (
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/tetris" element={<TetrisLoading />} />
           <Route path="/homePlacement" element={<HomePage />} />
           <Route path="/ourServices" element={<OurServices />} />
           <Route path="/aboutUs" element={<AboutUs />} />

@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'; 
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
@@ -27,23 +27,21 @@ export default defineConfig({
       output: {
         format: 'es',
       },
+      // Remove 'react', 'react-dom', and others from external:
       external: [
-        // 'react-router-dom',
-        // 'prop-types',
-        'react',
-        'react-dom',
-        'react/jsx-runtime',
-        'react-router-dom',
         'axios',
         'prop-types',
       ],
+    },
+    commonjsOptions: {
+      include: [/node_modules/], // Ensure CommonJS dependencies are bundled.
     },
     target: 'esnext',
     minify: true,
     assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000,
   },
-  "compilerOptions": {
-    "jsx": "react-jsx"
-  }
+  compilerOptions: {
+    jsx: 'react-jsx',
+  },
 });
