@@ -1,10 +1,9 @@
 /* TetrisLoader.css */
-.tetris-loader {
+.tetris-loading {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #fff; /* White background for contrast */
+  background-color: #FFF; /* White background for contrast */
 }
 
 .tetris-container {
