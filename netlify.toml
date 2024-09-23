@@ -1,9 +1,9 @@
 [build]
-  command = "cd pacific-nursing-solution && npm install && npm run build"
+  command = "cd pacific-nursing-solution && npm ci && npm run build"
   publish = "pacific-nursing-solution/dist"
 
 [context.production.environment]
-  NODE_VERSION = "18.20.0"
+  NODE_VERSION = "18"
 
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=4096"
