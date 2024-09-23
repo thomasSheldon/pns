@@ -1,22 +1,18 @@
-html, body {
-  margin: 0; /* Remove default margin */
-}
-/* TetrisLoading.css */
+/* TetrisLoader.css */
 .tetris-loader {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #D6EFFF; /* White background for contrast */
+  background-color: #fff; /* White background for contrast */
 }
 
 .tetris-container {
   display: flex;
   flex-wrap: wrap;
   width: 150px; /* Width to accommodate the falling blocks */
-  height: 200px; /* Increased height to accommodate falling blocks */
+  height: 150px; /* Height to accommodate the falling blocks */
   position: relative;
-  overflow: hidden; /* Prevent blocks from overflowing */
 }
 
 .block {
@@ -26,8 +22,6 @@ html, body {
   position: absolute;
   animation: fall 1.5s infinite ease-in-out;
 }
-
-
 
 .block1 {
   background-color: #6CBF2A;
@@ -84,7 +78,6 @@ html, body {
   left: 34px;
   animation-delay: 0.8s;
 }
-
 
 @keyframes fall {
   0% {

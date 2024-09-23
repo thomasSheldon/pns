@@ -23,7 +23,6 @@ export default defineConfig({
       },
       external: [
         'axios',
-        'prop-types',
         // You can include 'react' and 'react-dom' here if needed
       ],
     },
@@ -35,5 +34,4 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000,
   },
-  // Remove compilerOptions if you're not using TypeScript
 });
