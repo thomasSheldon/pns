@@ -4,12 +4,6 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [react(), svgr()],
-  resolve: {
-    alias: {
-      react: 'react',
-      'react-dom': 'react-dom',
-    },
-  },
   server: {
     port: 5174,
     proxy: {
@@ -27,10 +21,10 @@ export default defineConfig({
       output: {
         format: 'es',
       },
-      // Remove 'react', 'react-dom', and others from external:
       external: [
         'axios',
         'prop-types',
+        // You can include 'react' and 'react-dom' here if needed
       ],
     },
     commonjsOptions: {
@@ -41,7 +35,5 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000,
   },
-  compilerOptions: {
-    jsx: 'react-jsx',
-  },
+  // Remove compilerOptions if you're not using TypeScript
 });
