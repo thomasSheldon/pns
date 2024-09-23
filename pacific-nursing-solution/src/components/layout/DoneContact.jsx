@@ -9,7 +9,9 @@ const DoneContact = () => {
         We are excited to have you on our Pacific Nursing Solutions team!We are
         looking forward for your feedback and inquiries
       </p>
+      <div className="flex items-center justify-center py-8" >
       <img src={doneApplicationHero} alt="" className="mb-4" />
+      </div>
       <p className="mb-6 lg:px-20 md:px-14 sm:px-10 px-6 text-[#002245] font-medium lg:text-[20px] md:text-[18px] sm:text-[14px] text-[12px] max-w-[881px]">
         Thank you for reaching and contacting us. Please check your email for
         updates. We’ll get back to you soon.
