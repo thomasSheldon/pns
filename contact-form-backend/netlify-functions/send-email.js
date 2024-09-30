@@ -1,19 +1,17 @@
-const nodemailer = require('nodemailer');
+require('dotenv').config();
+const sgMail = require('@sendgrid/mail');
 const ipinfo = require('ipinfo');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// Set up SendGrid API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// Function to get formatted date and time
 function getFormattedDateTime() {
   const now = new Date();
   return now.toLocaleString();
 }
 
+// Function to fetch geolocation data
 async function getGeolocationData(ip) {
   return new Promise((resolve, reject) => {
     ipinfo(ip, { token: process.env.IPINFO_API_KEY }, (err, cLoc) => {
@@ -29,6 +27,7 @@ async function getGeolocationData(ip) {
   });
 }
 
+// Main handler function
 exports.handler = async (event) => {
   // Handle CORS preflight requests
   if (event.httpMethod === 'OPTIONS') {
@@ -54,14 +53,16 @@ exports.handler = async (event) => {
     };
   }
 
+  // Parse the event body
   const { fullName, email, message, currentEmployee, submittedApplication, geoLocationUrl } = JSON.parse(event.body);
   const dateTimeSent = getFormattedDateTime();
   const clientIp = event.headers['x-forwarded-for'] || event.requestContext.identity.sourceIp;
   const { country, region } = await getGeolocationData(clientIp);
 
+  // Prepare mail options for SendGrid
   const mailOptions = {
-    from: email,
-    to: process.env.EMAIL_USER,
+    from: process.env.SENDGRID_FROM_EMAIL, // Verified sender email
+    to: process.env.SENDGRID_TO_EMAIL,      // Receiver email
     subject: 'New Contact Form Submission',
     text: `
       Name: ${fullName}
@@ -77,8 +78,10 @@ exports.handler = async (event) => {
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Contact Form Email sent:', info.response);
+    // Send email using SendGrid
+    const result = await sgMail.send(mailOptions);
+    console.log('Contact Form Email sent:', result);
+
     return {
       statusCode: 200,
       headers: {

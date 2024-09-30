@@ -1,30 +1,36 @@
-// contact-form-backend/netlify-functions/subscribe.js
-// require('dotenv').config();  // Load environment variables
-const nodemailer = require('nodemailer');
+require('dotenv').config();
+const sgMail = require('@sendgrid/mail');
 const ipinfo = require('ipinfo');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// Set up SendGrid API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// Function to send email using SendGrid
+async function sendEmail(mailOptions) {
+  try {
+    const result = await sgMail.send(mailOptions);
+    return result;
+  } catch (error) {
+    console.error('Error sending email:', error.response ? error.response.body : error.message);
+    throw new Error('Error sending email: ' + error.message);
+  }
+}
+
+// Function to get formatted date and time
 function getFormattedDateTime() {
   const now = new Date();
-  return now.toLocaleString();
+  return now.toLocaleString(); // Formats date and time according to local settings
 }
-console.log('Email user:', process.env.EMAIL_USER);
-console.log('Email pass:', process.env.EMAIL_PASS ? '******' : 'Not Set');
 
+// Function to fetch geolocation data
 async function getGeolocationData(ip) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     ipinfo(ip, { token: process.env.IPINFO_API_KEY }, (err, cLoc) => {
       if (err) {
         console.error('Error fetching geolocation data:', err);
         resolve({ country: 'Unknown', region: 'Unknown' });
       } else {
+        console.log('Geolocation Data:', cLoc); // Log the full geolocation data
         const country = cLoc.country || 'Unknown';
         const region = cLoc.region || 'Unknown';
         resolve({ country, region });
@@ -33,6 +39,8 @@ async function getGeolocationData(ip) {
   });
 }
 
+
+// Main handler function
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
@@ -41,38 +49,35 @@ exports.handler = async (event) => {
     };
   }
 
-  const { email, geoLocationUrl } = JSON.parse(event.body);
-  const dateTimeSent = getFormattedDateTime();
-  const clientIp = event.headers['x-forwarded-for'] || event.requestContext.identity.sourceIp;
-  const { country, region } = await getGeolocationData(clientIp);
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_USER,
-    subject: 'New Newsletter Subscription',
-    text: `
-      A new user has subscribed to the newsletter:
-      
-      Email: ${email}
-      Location: ${geoLocationUrl ? `View on Google Maps: ${geoLocationUrl}` : 'Not Provided'}
-      Date and Time Sent: ${dateTimeSent}
-      Country: ${country}
-      Region: ${region}
-    `,
-  };
-
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Subscription Email sent:', info.response);
+    const { email, geoLocationUrl } = JSON.parse(event.body);
+    const dateTimeSent = getFormattedDateTime();
+    const clientIp = event.headers['x-forwarded-for'] || event.requestContext.identity.sourceIp;
+    const { country, region } = await getGeolocationData(clientIp);
+
+    // Prepare mail options for SendGrid
+    const mailOptions = {
+      from: process.env.SENDGRID_FROM_EMAIL,   // Use verified sender email
+      to: process.env.SENDGRID_TO_EMAIL,        // Receiver's email
+      subject: 'New Newsletter Subscription',
+      text: `A new user has subscribed to the newsletter:\n\nEmail: ${email}\nLocation: ${geoLocationUrl ? `View on Google Maps: ${geoLocationUrl}` : 'Not Provided'}\nDate and Time Sent: ${dateTimeSent}\nCountry: ${country}\nRegion: ${region}`,
+    };
+
+    console.log('Mail Options:', mailOptions); // Log mail options to see what is being sent
+
+    const info = await sendEmail(mailOptions);
+    console.log('Subscription Email sent:', info);
+    
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true, message: 'Subscription successful!' }),
     };
   } catch (error) {
     console.error('Error sending subscription email:', error);
+    
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error sending email', error: error.toString() }),
+      body: JSON.stringify({ message: 'Error sending email', error: error.message }),
     };
   }
 };

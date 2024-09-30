@@ -1,53 +1,38 @@
-const nodemailer = require('nodemailer');
-const { Buffer } = require('buffer');
-const { bucket } = require('./firebaseConfig');
+const sgMail = require('@sendgrid/mail');
+const { storage, bucket } = require('./firebaseConfig'); // Import Firebase storage and bucket
 
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Set the SendGrid API key
 
-// Function to get formatted date and time
+// Function to get the current formatted date and time
 function getFormattedDateTime() {
   const now = new Date();
   return now.toLocaleString();
 }
 
-// Function to sanitize file name
+// Function to sanitize the file name by replacing illegal characters
 function sanitizeFileName(fileName) {
   const nameWithoutExtension = fileName.split('.').slice(0, -1).join('.');
   const extension = fileName.split('.').pop();
   return `${nameWithoutExtension.replace(/[^a-zA-Z0-9]/g, '_')}.${extension}`;
 }
 
-// Function to upload resume to Firebase Storage
+// Function to upload the resume file to Firebase Storage
+// Function to upload the resume file to Firebase Storage
 async function uploadResumeToFirebase(fileBuffer, fileName) {
   try {
     const sanitizedFileName = sanitizeFileName(fileName);
     const file = bucket.file(`resumes/${sanitizedFileName}`);
 
-    // Log before saving
-    console.log(`Saving file ${sanitizedFileName} to Firebase`);
+    console.log(`Saving file ${sanitizedFileName} to Firebase Storage`);
 
-    // Save the file to Firebase Storage with the correct MIME type
     await file.save(fileBuffer, {
       metadata: { contentType: 'application/pdf' },
     });
 
-    // Make the file public
     await file.makePublic();
+    const downloadURL = `https://storage.googleapis.com/${bucket.name}/resumes/${sanitizedFileName}`;
 
-    // Get the public URL
-    const [metadata] = await file.getMetadata();
-    const downloadToken = metadata?.metadata?.firebaseStorageDownloadTokens;
-    const downloadURL = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(`resumes/${sanitizedFileName}`)}?alt=media&token=${downloadToken}`;
-    
-    console.log(`File uploaded successfully. Metadata:`, metadata);
-    console.log(`File accessible at: ${downloadURL}`);
+    console.log(`File uploaded successfully: ${downloadURL}`);
 
     return downloadURL;
   } catch (error) {
@@ -70,7 +55,6 @@ function extractFileData(parts, boundary) {
         fileName = fileNameMatch[1];
         const contentTypeMatch = header.match(/Content-Type: (.+)/);
         if (contentTypeMatch && contentTypeMatch[1] === 'application/pdf') {
-          // Clean content from boundary markers and extra newlines
           const cleanedContent = content.split(`--${boundary}`)[0].trim();
           resumeBuffer = Buffer.from(cleanedContent, 'binary');
         }
@@ -81,14 +65,17 @@ function extractFileData(parts, boundary) {
   return { resumeBuffer, fileName };
 }
 
-// Main handler function for Netlify
-const handler = async (event) => {
+// Main handler function for the Netlify function
+exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
       body: 'Method Not Allowed',
     };
   }
+
+  let fileName = null;
+  let resumeBuffer = null;
 
   try {
     const contentType = event.headers['content-type'] || event.headers['Content-Type'];
@@ -102,27 +89,26 @@ const handler = async (event) => {
     const parts = bodyBuffer.toString('binary').split(`--${boundary}`);
 
     const fieldValues = {};
-    let resumeBuffer = null;
-    let fileName = null;
 
-    // Extract file data with boundary
+    // Extract the file from the form data
     const { resumeBuffer: extractedBuffer, fileName: extractedFileName } = extractFileData(parts, boundary);
     resumeBuffer = extractedBuffer;
     fileName = extractedFileName;
 
+    // If the resume exists, upload it to Firebase and retrieve the URL
     if (resumeBuffer && fileName) {
       const resumeUrl = await uploadResumeToFirebase(resumeBuffer, fileName);
-      fieldValues.resumeUrl = resumeUrl;
+      fieldValues.resumeUrl = resumeUrl; // Set the URL for use in the email
     }
 
-    // Extract form fields
+    // Extract form fields (text input values)
     parts.forEach((part) => {
       const [header, content] = part.split('\r\n\r\n');
       if (header && content) {
         const nameMatch = header.match(/name="(.+?)"/);
         if (nameMatch) {
           const fieldName = nameMatch[1];
-          if (!fileName || !header.match(/filename="(.+?)"/)) {
+          if (!header.match(/filename="(.+?)"/)) {
             fieldValues[fieldName] = content.trim();
           }
         }
@@ -130,43 +116,56 @@ const handler = async (event) => {
     });
 
     // Prepare the email body
-    const emailText = `
-      First Name: ${fieldValues.firstName}
-      Last Name: ${fieldValues.lastName}
-      Contact Number: ${fieldValues.contactNumber}
-      Email: ${fieldValues.email}
-      Date of Birth: ${fieldValues.dob}
-      Location: ${fieldValues.location}
-      Registered Nurse: ${fieldValues.registeredNurse}
-      BSN Degree: ${fieldValues.bsnDegree}
-      Immigration Petition: ${fieldValues.immigrationPetition}
-      Current Employee: ${fieldValues.currentEmployee}
-      Submitted Application: ${fieldValues.submittedApplication}
-      Questions: ${fieldValues.questions}
-      Resume URL: ${fieldValues.resumeUrl}
-      Date and Time Sent: ${getFormattedDateTime()}
+    const emailHtml = `
+      <h2>New Application Form Submission</h2>
+      <p><strong>First Name:</strong> ${fieldValues.firstName}</p>
+      <p><strong>Last Name:</strong> ${fieldValues.lastName}</p>
+      <p><strong>Contact Number:</strong> ${fieldValues.contactNumber}</p>
+      <p><strong>Email:</strong> ${fieldValues.email}</p>
+      <p><strong>Date of Birth:</strong> ${fieldValues.dob}</p>
+      <p><strong>Location:</strong> ${fieldValues.location}</p>
+      <p><strong>Registered Nurse:</strong> ${fieldValues.registeredNurse}</p>
+      <p><strong>BSN Degree:</strong> ${fieldValues.bsnDegree}</p>
+      <p><strong>Immigration Petition:</strong> ${fieldValues.immigrationPetition}</p>
+      <p><strong>Current Employee:</strong> ${fieldValues.currentEmployee}</p>
+      <p><strong>Submitted Application:</strong> ${fieldValues.submittedApplication}</p>
+      <p><strong>Questions:</strong> ${fieldValues.questions}</p>
+      <p><strong>Resume URL:</strong> <a href="${fieldValues.resumeUrl}">Download Resume</a></p>
+      <p><strong>Date and Time Sent:</strong> ${getFormattedDateTime()}</p>
     `;
 
-    const mailOptions = {
-      from: fieldValues.email,
-      to: process.env.EMAIL_USER,
+    // Email sending configuration
+    const msg = {
+      to: process.env.SENDGRID_FROM_EMAIL, // Set recipient email
+      from: process.env.SENDGRID_FROM_EMAIL, // Sender email
       subject: 'New Application Form Submission',
-      text: emailText,
+      html: emailHtml, // Use preformatted text for email body
+      mail_settings: {
+        sandbox_mode: {
+          enable: false // Ensure this is set to false
+        }
+      }
     };
 
-    await transporter.sendMail(mailOptions);
+    console.log('Sending email to:', process.env.SENDGRID_FROM_EMAIL);
 
+    // Send the email using SendGrid
+    await sgMail.send(msg);
+
+    // Return success response and redirect URL
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true, redirectUrl: '/doneApplication' }),
     };
   } catch (error) {
-    console.error('Error processing form:', error);
+    const fileUrl = fileName ? `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/resumes%2F${encodeURIComponent(fileName)}?alt=media` : 'unknown';
+
+    console.error(`Error processing form. Check the uploaded file link: ${fileUrl}`);
+    console.error('Error details:', error);
+
     return {
       statusCode: 500,
       body: JSON.stringify({ message: 'Error processing form', error: error.toString() }),
     };
   }
 };
-
-module.exports = { handler };

@@ -27,6 +27,23 @@ const ApplicationForm = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // Add a loading state
 
+  // Helper function to calculate the age based on the date of birth
+  const calculateAge = (dob) => {
+    const today = new Date();
+    const birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // Adjust age if the birth month hasn't occurred yet this year
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
+
   // Geolocation fetch on component mount
   useEffect(() => {
     if (navigator.geolocation) {
@@ -73,13 +90,21 @@ const ApplicationForm = () => {
     }
   };
 
-
   // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true when form is submitted
+
+    // Validate age (must be at least 21 years old)
+    const age = calculateAge(formData.dob);
+    if (age < 21) {
+      setErrors({ dob: "You must be at least 21 years old to apply." });
+      setLoading(false); // Reset loading state
+      return;
+    }
+
     const data = new FormData();
-    
+
     // Append form data to FormData object
     Object.keys(formData).forEach((key) => {
       if (key === "file" && formData.file) {
@@ -96,7 +121,8 @@ const ApplicationForm = () => {
           "Content-Type": "multipart/form-data", // Ensure multipart for file upload
         },
       });
-      
+      console.log('Form submitted successfully:', response.data);
+
       if (response.data.success) {
         navigate("/doneApplication");
       } else {
@@ -104,12 +130,12 @@ const ApplicationForm = () => {
       }
     } catch (error) {
       setErrors({ general: "There was an error submitting your application." });
+      console.error('Error submitting form:', error);
     } finally {
       setLoading(false); // Reset loading state
     }
   };
 
-  
   return (
     <section className="bg-primaryBackground">
       <Navigation />
@@ -118,9 +144,16 @@ const ApplicationForm = () => {
       </div>
 
       <div className="flex flex-col items-center text-[#093761] px-4 py-8">
-        <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit} className="w-full max-w-4xl">
-           {/* Display error messages */}
-           {errors.general && <div className="text-red-500 mb-4">{errors.general}</div>}
+        <form
+          encType="multipart/form-data"
+          method="POST"
+          onSubmit={handleSubmit}
+          className="w-full max-w-4xl"
+        >
+          {/* Display error messages */}
+          {errors.general && (
+            <div className="text-red-500 mb-4">{errors.general}</div>
+          )}
 
           {/* Form fields go here */}
           {/* Include the existing fields for name, contact, etc. */}
@@ -171,6 +204,9 @@ const ApplicationForm = () => {
               required
               className="w-full px-4 py-2 border border-[#366510] rounded-full text-[#093761] bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            {errors.dob && (
+              <div className="text-red-500 mb-2">{errors.dob}</div>
+            )}
             <input
               type="text"
               name="location"

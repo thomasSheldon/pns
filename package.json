@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@sendgrid/mail": "^8.1.3",
+    "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.5",
     "concurrently": "^7.6.0",
@@ -19,8 +21,7 @@
     "react-router-dom": "^5.3.0",
     "serverless-http": "^3.2.0",
     "tailwindcss": "^3.4.12",
-    "vite-plugin-svgr": "^4.2.0",
-    "@vitejs/plugin-react": "^4.3.1"
+    "vite-plugin-svgr": "^4.2.0"
   },
   "scripts": {
     "prestart": "npm install -g concurrently",
