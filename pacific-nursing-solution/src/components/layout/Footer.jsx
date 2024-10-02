@@ -50,33 +50,63 @@ const Footer = () => {
           <ul>
             <li className="flex items-center mb-4">
               <img src={phone} alt="Contact Icon" className="w-6 h-6 mr-4" />
-              <span>+1 (206) 947 3706</span>
+              <a href="tel:+12069473706" className="hover:text-gray-300">
+                +1 (206) 947 3706
+              </a>
             </li>
+
             <li className="flex items-center mb-4">
               <img src={email} alt="Email Icon" className="w-6 h-6 mr-4" />
-              <span>info@pacificnursing.org</span>
+              <a
+                href="mailto:info@pacificnursing.org"
+                className="hover:text-gray-300"
+              >
+                info@pacificnursing.org
+              </a>
             </li>
+
             <li className="flex items-center mb-4">
               <img src={loc} alt="Location Icon" className="w-6 h-6 mr-4" />
-              <span>Benton City, Washington, USA</span>
+              <a
+                href="https://www.google.com/maps/place/Benton+City,+Washington,+USA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-300"
+              >
+                Benton City, Washington, USA
+              </a>
             </li>
+
             <li className="flex space-x-4">
-              <Link target="_blank" to="https://www.linkedin.com/company/pacific-nursing-solutions/">
-              <img
-                src={linkedin}
-                alt="LinkedIn"
-                className="w-6 h-6 cursor-pointer"
-              />
+              <Link
+                target="_blank"
+                to="https://www.linkedin.com/company/pacific-nursing-solutions/"
+              >
+                <img
+                  src={linkedin}
+                  alt="LinkedIn"
+                  className="w-6 h-6 cursor-pointer"
+                />
               </Link>
-              <Link target="_blank" to="https://www.instagram.com/pacificnursingsolutions " >
-              <img
-                src={ig}
-                alt="Instagram"
-                className="w-6 h-6 cursor-pointer"
-              />
+              <Link
+                target="_blank"
+                to="https://www.instagram.com/pacificnursingsolutions "
+              >
+                <img
+                  src={ig}
+                  alt="Instagram"
+                  className="w-6 h-6 cursor-pointer"
+                />
               </Link>
-              <Link target="_blank" to="https://www.facebook.com/profile.php?id=61559591027984&sk=about">
-              <img src={fb} alt="Facebook" className="w-6 h-6 cursor-pointer" />
+              <Link
+                target="_blank"
+                to="https://www.facebook.com/profile.php?id=61559591027984&sk=about"
+              >
+                <img
+                  src={fb}
+                  alt="Facebook"
+                  className="w-6 h-6 cursor-pointer"
+                />
               </Link>
             </li>
           </ul>
@@ -88,18 +118,63 @@ const Footer = () => {
             Company
           </h4>
           <div className="grid grid-cols-3 gap-4">
-            <span>About Us</span>
-            <span>Our Services</span>
-            <span>Careers</span>
-            <span>Application Form</span>
-            <span>Our NCLEX Guide</span>
-            <span>Our IELTS Guide</span>
-            <span>Our Immigration Guide</span>
-            <span>FAQs</span>
-            <span>Placement Guide</span>
-            <span>Networking Benefits</span>
-            <span>Company Benefits</span>
-            <span>Blogs</span>
+            <Link to="/aboutUs" className="hover:text-gray-300">
+              About Us
+            </Link>
+            <Link to="/ourServices" className="hover:text-gray-300">
+              Our Services
+            </Link>
+            <Link to="/careers" className="hover:text-gray-300">
+              Careers
+            </Link>
+            <Link
+              to="/applicationForm"
+              className="hover:text-gray-300"
+            >
+              Application Form
+            </Link>
+            <Link
+              to="/ourNclexGuide"
+              className="hover:text-gray-300"
+            >
+              Our NCLEX Guide
+            </Link>
+            <Link
+              to="/ourIeltsGuide"
+              className="hover:text-gray-300"
+            >
+              Our IELTS Guide
+            </Link>
+            <Link
+              to="/ourImmigrationGuide"
+              className="hover:text-gray-300"
+            >
+              Our Immigration Guide
+            </Link>
+            <Link to="/faqs" className="hover:text-gray-300">
+              FAQs
+            </Link>
+            <Link
+              to="/homePlacement"
+              className="hover:text-gray-300"
+            >
+              Placement Guide
+            </Link>
+            <Link
+              to="/networkingBenefits"
+              className="hover:text-gray-300"
+            >
+              Networking Benefits
+            </Link>
+            <Link
+              to="/companyBenefits"
+              className="hover:text-gray-300"
+            >
+              Company Benefits
+            </Link>
+            <Link to="/blogs" className="hover:text-gray-300">
+              Blogs
+            </Link>
           </div>
         </div>
 

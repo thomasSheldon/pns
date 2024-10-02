@@ -1,7 +1,7 @@
 [build]
   command = "npm install && cd pacific-nursing-solution && npm run build"
   publish = "pacific-nursing-solution/dist"
-    cache = false 
+  cache = true  # Enable caching for faster builds
 
 [context.production.environment]
   NODE_VERSION = "18.18.0"
