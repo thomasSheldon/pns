@@ -4,7 +4,7 @@
     cache = false 
 
 [context.production.environment]
-  NODE_VERSION = "18.17.1"
+  NODE_VERSION = "18.18.0"
 
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=4096"
