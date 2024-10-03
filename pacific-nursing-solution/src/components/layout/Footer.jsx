@@ -134,19 +134,19 @@ const Footer = () => {
               Application Form
             </Link>
             <Link
-              to="/ourNclexGuide"
+              to="/homePlacement"
               className="hover:text-gray-300"
             >
               Our NCLEX Guide
             </Link>
             <Link
-              to="/ourIeltsGuide"
+              to="/ieltsGuide"
               className="hover:text-gray-300"
             >
               Our IELTS Guide
             </Link>
             <Link
-              to="/ourImmigrationGuide"
+              to="/homePlacement"
               className="hover:text-gray-300"
             >
               Our Immigration Guide
@@ -161,18 +161,18 @@ const Footer = () => {
               Placement Guide
             </Link>
             <Link
-              to="/networkingBenefits"
+              to="/homePlacement"
               className="hover:text-gray-300"
             >
               Networking Benefits
             </Link>
             <Link
-              to="/companyBenefits"
+              to="/ieltsGuide"
               className="hover:text-gray-300"
             >
               Company Benefits
             </Link>
-            <Link to="/blogs" className="hover:text-gray-300">
+            <Link to="/feauture" className="hover:text-gray-300">
               Blogs
             </Link>
           </div>

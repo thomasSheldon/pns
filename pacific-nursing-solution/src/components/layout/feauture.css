@@ -1,0 +1,108 @@
+/* Main container for the animation */
+.tetris-loading-feature {
+    display: flex;
+    flex-direction: column; /* Align children in a column */
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF; /* White background for contrast */
+    min-height: 100vh;
+}
+
+/* Container for blocks */
+.tetris-container-feature {
+    display: flex;
+    flex-wrap: wrap;
+    width: 150px; /* Width to accommodate the falling blocks */
+    height: 150px; /* Height to accommodate the falling blocks */
+    position: relative;
+    margin-bottom: 20px; /* Space below the Tetris animation */
+}
+
+/* Blocks that move from left to right */
+.block-feature {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    position: absolute;
+    animation: slide 1.5s infinite ease-in-out;
+}
+
+/* Block positioning */
+.block1-feature {
+    background-color: #6CBF2A;
+    top: 0;
+    left: 0;
+    animation-delay: 0.1s;
+}
+
+.block2-feature {
+    background-color: #093761;
+    top: 0;
+    left: 34px;
+    animation-delay: 0.2s;
+}
+
+.block3-feature {
+    background-color: #0E3D68;
+    top: 0;
+    left: 68px;
+    animation-delay: 0.3s;
+}
+
+.block4-feature {
+    background-color: #C6E8FF;
+    top: 34px;
+    left: 0;
+    animation-delay: 0.4s;
+}
+
+.block5-feature {
+    background-color: #6CBF2A;
+    top: 34px;
+    left: 34px;
+    animation-delay: 0.5s;
+}
+
+.block6-feature {
+    background-color: #093761;
+    top: 34px;
+    left: 68px;
+    animation-delay: 0.6s;
+}
+
+.block7-feature {
+    background-color: #0E3D68;
+    top: 68px;
+    left: 0;
+    animation-delay: 0.7s;
+}
+
+.block8-feature {
+    background-color: #C6E8FF;
+    top: 68px;
+    left: 34px;
+    animation-delay: 0.8s;
+}
+
+/* Move blocks from left to right */
+@keyframes slide {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* Button container */
+.button-container {
+    display: flex; /* Align buttons horizontally */
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px; /* Space above the button container */
+}

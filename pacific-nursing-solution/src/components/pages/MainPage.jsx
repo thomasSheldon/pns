@@ -10,6 +10,9 @@ import Home from "./Home";
 import TetrisLoading from "../layout/TetrisLoading";
 import DoneApplication from "../layout/DoneApplication";
 import DoneContact from "../layout/DoneContact";
+import Feauture from "../layout/Feauture";
+import IeltsGuides from "../layout/IeltsGuides";
+
 function MainPage() {
   const [loading, setLoading] = useState(true);
 
@@ -39,6 +42,8 @@ function MainPage() {
           <Route path="/faqs" element={<Faqs />} />
           <Route path="/doneApplication" element={<DoneApplication />} />
           <Route path="/doneContact" element={<DoneContact />} />
+          <Route path="/feauture" element={<Feauture />} />
+          <Route path="/ieltsGuide" element={<IeltsGuides />} />
         </Routes>
       )}
     </>

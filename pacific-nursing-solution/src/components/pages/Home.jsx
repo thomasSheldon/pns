@@ -12,7 +12,6 @@ import {
 // const HomeHero = lazy(() => import('../../assets/homePageButton/homeHero.svg').then(module => ({ default: module.ReactComponent })));
 // const HomeOurService = lazy(() => import('../../assets/homePageButton/homeOurService.svg').then(module => ({ default: module.ReactComponent })));
 
-
 import { homeOurServiceContent } from "../../constants";
 import Button from "../layout/Button";
 import ApplicationNow from "../layout/ApplicationNow";
@@ -90,7 +89,6 @@ const Home = () => {
     },
   ];
 
-
   // State to track which FAQ is expanded
   const [expandedIndex, setExpandedIndex] = useState(null);
 
@@ -122,8 +120,10 @@ const Home = () => {
         <img
           src={homeHero}
           alt=""
-          className={`w-full ${imageLoaded.homeHero ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(prev => ({ ...prev, homeHero: true }))}
+          className={`w-full ${
+            imageLoaded.homeHero ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setImageLoaded((prev) => ({ ...prev, homeHero: true }))}
         />
       </div>
 
@@ -147,13 +147,16 @@ const Home = () => {
         <img
           src={homeOurService}
           alt=""
-          className={`w-full ${imageLoaded.homeOurService ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(prev => ({ ...prev, homeOurService: true }))}
+          className={`w-full ${
+            imageLoaded.homeOurService ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() =>
+            setImageLoaded((prev) => ({ ...prev, homeOurService: true }))
+          }
         />
       </div>
 
-
-     {/* <div>
+      {/* <div>
      <Suspense fallback={<div>Loading...</div>}>
         <HomeHero className="w-full" alt="" />
       </Suspense>
@@ -192,8 +195,8 @@ const Home = () => {
             <Button
               color="#0E3D68"
               textColor="#78C440"
-              // width="lg:230px"
               className="sm:mt-4 mt-5 lg:w-[230px] sm:w-[180px] md:w-[200px] w-[100px] text-[10px] sm:text-[14px] md:text-[18px]"
+              onClick={() => setHoveredIndex(index)} // Set hoveredIndex on button click
             >
               LEARN MORE
             </Button>
@@ -202,81 +205,92 @@ const Home = () => {
       </div>
 
       <div>
-      <div className="relative lg:mt-28">
-        {!imageLoaded.joinHero && (
-          <div className="placeholder">
-            <div className="tetris-loader">
-              <div className="tetris-container">
-                <div className="block block1"></div>
-                <div className="block block2"></div>
-                <div className="block block3"></div>
-                <div className="block block4"></div>
-                <div className="block block5"></div>
-                <div className="block block6"></div>
-                <div className="block block7"></div>
-                <div className="block block8"></div>
+        <div className="relative lg:mt-28">
+          {!imageLoaded.joinHero && (
+            <div className="placeholder">
+              <div className="tetris-loader">
+                <div className="tetris-container">
+                  <div className="block block1"></div>
+                  <div className="block block2"></div>
+                  <div className="block block3"></div>
+                  <div className="block block4"></div>
+                  <div className="block block5"></div>
+                  <div className="block block6"></div>
+                  <div className="block block7"></div>
+                  <div className="block block8"></div>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <img
-          src={joinHero}
-          alt=""
-          className={`w-full ${imageLoaded.joinHero ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(prev => ({ ...prev, joinHero: true }))}
-        />
-      </div>
+          )}
+          <img
+            src={joinHero}
+            alt=""
+            className={`w-full ${
+              imageLoaded.joinHero ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() =>
+              setImageLoaded((prev) => ({ ...prev, joinHero: true }))
+            }
+          />
+        </div>
 
-      <div className="relative lg:p-20 md:p-16 sm:p-12 p-10">
-        {!imageLoaded.ourPhilo && (
-          <div className="placeholder">
-            <div className="tetris-loader">
-              <div className="tetris-container">
-                <div className="block block1"></div>
-                <div className="block block2"></div>
-                <div className="block block3"></div>
-                <div className="block block4"></div>
-                <div className="block block5"></div>
-                <div className="block block6"></div>
-                <div className="block block7"></div>
-                <div className="block block8"></div>
+        <div className="relative lg:p-20 md:p-16 sm:p-12 p-10">
+          {!imageLoaded.ourPhilo && (
+            <div className="placeholder">
+              <div className="tetris-loader">
+                <div className="tetris-container">
+                  <div className="block block1"></div>
+                  <div className="block block2"></div>
+                  <div className="block block3"></div>
+                  <div className="block block4"></div>
+                  <div className="block block5"></div>
+                  <div className="block block6"></div>
+                  <div className="block block7"></div>
+                  <div className="block block8"></div>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <img
-          src={ourPhilo}
-          alt=""
-          className={`w-full ${imageLoaded.ourPhilo ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(prev => ({ ...prev, ourPhilo: true }))}
-        />
-      </div>
+          )}
+          <img
+            src={ourPhilo}
+            alt=""
+            className={`w-full ${
+              imageLoaded.ourPhilo ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() =>
+              setImageLoaded((prev) => ({ ...prev, ourPhilo: true }))
+            }
+          />
+        </div>
 
-      <div className="relative z-0 -mt-[180px] sm:-mt-[295px] md:-mt-[395px] lg:-mt-[535px] xlg:-mt-[540px]">
-        {!imageLoaded.costWagesPlacements && (
-          <div className="placeholder">
-            <div className="tetris-loader">
-              <div className="tetris-container">
-                <div className="block block1"></div>
-                <div className="block block2"></div>
-                <div className="block block3"></div>
-                <div className="block block4"></div>
-                <div className="block block5"></div>
-                <div className="block block6"></div>
-                <div className="block block7"></div>
-                <div className="block block8"></div>
+        <div className="relative z-0 -mt-[180px] sm:-mt-[295px] md:-mt-[395px] lg:-mt-[535px] xlg:-mt-[540px]">
+          {!imageLoaded.costWagesPlacements && (
+            <div className="placeholder">
+              <div className="tetris-loader">
+                <div className="tetris-container">
+                  <div className="block block1"></div>
+                  <div className="block block2"></div>
+                  <div className="block block3"></div>
+                  <div className="block block4"></div>
+                  <div className="block block5"></div>
+                  <div className="block block6"></div>
+                  <div className="block block7"></div>
+                  <div className="block block8"></div>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <img
-          src={costWagesPlacements}
-          alt=""
-          className={`w-full ${imageLoaded.costWagesPlacements ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(prev => ({ ...prev, costWagesPlacements: true }))}
-        />
-      </div>
-
+          )}
+          <img
+            src={costWagesPlacements}
+            alt=""
+            className={`w-full ${
+              imageLoaded.costWagesPlacements ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() =>
+              setImageLoaded((prev) => ({ ...prev, costWagesPlacements: true }))
+            }
+          />
+        </div>
       </div>
       <div className="relative lg:-mt-2 sm:-mt-[7px] -mt-1">
         {!imageLoaded.faqsHome && (
@@ -298,8 +312,10 @@ const Home = () => {
         <img
           src={faqsHome}
           alt=""
-          className={`w-full ${imageLoaded.faqsHome ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(prev => ({ ...prev, faqsHome: true }))}
+          className={`w-full ${
+            imageLoaded.faqsHome ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setImageLoaded((prev) => ({ ...prev, faqsHome: true }))}
         />
       </div>
 
