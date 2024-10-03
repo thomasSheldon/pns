@@ -19,19 +19,18 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       output: {
-        format: 'es',
+        format: 'es', // Keep ES modules for modern browsers
       },
       external: [
-        // 'axios',
-        // You can include 'react' and 'react-dom' here if needed
+        // Externalize dependencies here if you use CDN (e.g., 'react', 'react-dom', etc.)
       ],
     },
     commonjsOptions: {
-      include: [/node_modules/], // Ensure CommonJS dependencies are bundled.
+      include: [/node_modules/], // Ensures that CommonJS dependencies are bundled correctly.
     },
-    target: 'esnext',
-    minify: true,
-    assetsInlineLimit: 4096,
-    chunkSizeWarningLimit: 1000,
+    target: 'es2015', // Broader browser compatibility compared to 'esnext'
+    minify: true, // Default Vite minification
+    assetsInlineLimit: 8192, // Increased inline limit to 8kb for small assets like icons.
+    chunkSizeWarningLimit: 1500, // Increased chunk size warning limit to 1500kb
   },
 });
