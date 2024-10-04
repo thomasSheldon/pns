@@ -17,17 +17,17 @@ const Faqs = () => {
     },
     {
       question: 'What qualifications do I need to apply for your program?',
-      answer: 'Yes, we ship to over 100 countries worldwide. Shipping fees and delivery times may vary depending on the destination.',
+      answer: 'We are requiring that applicant should have at least passed the Nursing Licensure Exam and at least a minimum of two years working experience.',
     },
     {
       question: 'What costs are involved in the process?',
       answer: 'Costs can include fees for visa applications, exam registrations, exam prep and relocation. Pacific Nursing Solutions offers transparent fee structures.',
     },   {
       question: 'What type of support is available after I start working in the U.S.?',
-      answer: 'Yes, we ship to over 100 countries worldwide. Shipping fees and delivery times may vary depending on the destination.',
+      answer: 'We offer extensive career opportunities and committed on advancing your nursing career this will include job placement, mentorship and an access on cutting-edge facilities. We are committed on supporting you to achieve your goals in the U.S',
     },   {
       question: 'Can I speak with someone directly about my application and the process?',
-      answer: 'Yes, we ship to over 100 countries worldwide. Shipping fees and delivery times may vary depending on the destination.',
+      answer: 'Yes, you can directly reach to us, we are live 24/7 on providing you the best application experience, you can either submit your application in contact form page and our team will respond to you or just scroll down and click the contact on Reach Us section below. ',
     },   {
       question: 'What makes Pacific Nursing Solutions unique compared to other recruitment agencies?',
       answer: ' Pacific Nursing Solutions stands out due to our personalized approach, comprehensive support services, and navigating the U.S. immigration and licensing process for nurses. We not only focus on recruitment but also ensure our nurses are fully prepared and supported throughout their transition to working and living in the U.S. Our commitment to the success and well-being of our nurses sets us apart.',
@@ -36,10 +36,10 @@ const Faqs = () => {
       answer: "Several factors can influence the timeline, including the time needed to gather and prepare necessary documents, the availability of visa interview appointments, the processing speed of U.S. immigration services, and the nurse's preparedness for exams like the NCLEX-RN. Additionally, specific healthcare facility requirements  and finding placement can also impact the overall duration of the process.'",
     },   {
       question: 'What are the necessary steps to join Pacific Nursing Solutions and start working in the U.S.?',
-      answer: 'Yes, we ship to over 100 countries worldwide. Shipping fees and delivery times may vary depending on the destination.',
+      answer: 'You will need to submit your application, provide your updated Resume and answer the necessary question. After this, just sit back and relax because our team will do the rest and will contact you as soon as possible.',
     },   {
       question: ' What kind of healthcare facilities will I be placed in through Pacific Nursing Solutions?',
-      answer: 'Yes, we ship to over 100 countries worldwide. Shipping fees and delivery times may vary depending on the destination.',
+      answer: 'We are committed on making you have an access on cutting-edge facilities to work in the top U.S. Health Care facilities, we will connect you with the placement in a hospital as we directly employ you for that position.',
     },
   ];
 
