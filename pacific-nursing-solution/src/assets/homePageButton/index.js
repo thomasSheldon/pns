@@ -9,7 +9,8 @@ import structuredStudyPlan from "./structuredStudyPlan.svg";
 import supportServices from "./supportServices.svg";
 import trainingAndReviewCourses from "./trainingAndReviewCourses.svg";
 import tutoringAndMentoring from "./tutoringAndMentoring.svg";
-import application from "./application.svg";
+// import application from "./application.svg";
+import application from "./application.png";
 
 // Hover state SVG files
 import trainingAndReviewCourseHover from "./trainingAndReviewCourseHover.svg";
@@ -22,7 +23,8 @@ import postPlacementSupportHover from "./postPlacementSupportHover.svg";
 import salaryNegotiationAndBenefitsHover from "./salaryNegotiationAndBenefitsHover.svg";
 import supportServicesHover from "./supportServicesHover.svg";
 import resumeAndCoverLetterHover from "./resumeAndCoverLetterHover.svg";
-import heroServices from "./heroServices.svg";
+// import heroServices from "./heroServices.svg";
+import heroServices from "./heroServices.png";
 
 import nclex from "./nclex.svg";
 import nclexText from "./nclexText.svg";
@@ -43,18 +45,22 @@ import network from "./network.svg";
 import networkHover from "./networkHover.svg";
 import networkText from "./networkText.svg";
 
-import handsOnHero from "./handsOnHero.svg";
+// import handsOnHero from "./handsOnHero.svg";
+import handsOnHero from "./handsOnHero.png";
 
-import aboutUsHero from "./aboutUsHero.svg";
+// import aboutUsHero from "./aboutUsHero.svg";
+import aboutUsHero from "./aboutUsHero.png";
 
-import aboutUsMissionVission from "./aboutUsMissionVission.svg";
+// import aboutUsMissionVission from "./aboutUsMissionVission.svg";
+import aboutUsMissionVission from "./aboutUsMissionVission.png";
 
-import ourStory from "./ourStory.svg";
+// import ourStory from "./ourStory.svg";
+import ourStory from "./ourStory.png";
 
-import ourFounder from "./ourFounder.svg";
+// import ourFounder from "./ourFounder.svg";
+import ourFounder from "./ourFounder.png";
 
-import homeHero from "./homeHero.svg";
-import homeOurService from "./homeOurService.svg";
+
 
 import homeNclex from "./homeNclex.svg";
 import homeIelts from "./homeIelts.svg";
@@ -62,10 +68,11 @@ import homePlacement from "./homePlacement.svg";
 import homeBenefits from "./homeBenefits.svg";
 import homeCompensation from "./homeCompensation.svg";
 import homeImmigration from "./homeImmigration.svg";
-import joinHero from "./joinHero.svg";
+import joinHero from "./joinHero.png";
 
 import ourPhilo from "./ourPhilo.svg";
-import costWagesPlacements from "./costWagesPlacements.svg";
+// import costWagesPlacements from "./costWagesPlacements.svg";
+import costWagesPlacements from "./costWagesPlacements.png";
 
 import contactUsHero from "./contactUsHero.svg";
 
@@ -82,8 +89,15 @@ import linkedin from "./linkedin.svg";
 import ig from "./ig.svg";
 import fb from "./fb.svg";
 
-import doneApplicationHero from "./doneApplicationHero.svg";
+// import doneApplicationHero from "./doneApplicationHero.svg";
+import doneApplicationHero from "./doneApplicationHero.png";
 // Exporting all the imported SVG files
+
+
+// home
+import homeHero from "./homeHero.png";
+import homeOurService from "./homeOurService.png";
+
 
 export {
     adminAssistance,
