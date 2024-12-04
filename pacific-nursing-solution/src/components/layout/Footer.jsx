@@ -51,7 +51,7 @@ const Footer = () => {
             <li className="flex items-center mb-4">
               <img src={phone} alt="Contact Icon" className="w-6 h-6 mr-4" />
               <a href="tel:+12069473706" className="hover:text-gray-300">
-                +1 (206) 947 3706
+                +1 425-331-9078
               </a>
             </li>
 
